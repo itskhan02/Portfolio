@@ -171,11 +171,11 @@ header .navbar ul li a:hover {
   background-image: url(src/images/bg5.jpg);
   height: 95vh;
   width: 100%;
-  padding: 10px 100px;
+  padding: 3rem 10rem;
   display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
   line-height: 1;
   flex-wrap: wrap;
   background-repeat: no-repeat;
@@ -192,19 +192,19 @@ header .navbar ul li a:hover {
   width: 100%;
 }
 #home .info {
-  flex: 1 1 40rem;
-  padding-top: 140px;
+  padding-top: 3rem;
   z-index: 1;
+  margin-left: 6rem;
   justify-items: flex-start;
   flex-direction: column;
   justify-content: center
 }
 #home .hero {
   z-index: 1;
-  margin-left: -30px;
+  width: 55%;
 }
 #home .hero img {
-  width: 37%;
+  width: 60%;
   margin-left: 0px;
   border-radius: 50%;
   box-shadow: 0 8px 10px rgba(0, 0, 0, 0.3);
@@ -250,7 +250,7 @@ header .navbar ul li a:hover {
   margin-left: -19rem;
   position: absolute;
   line-height: 0;
-  padding: 1.6rem 2rem;
+  padding: 1.1rem 0.8rem;
   border-radius: 4em;
   transition: 0.5s;
   color: #fff;
@@ -262,24 +262,24 @@ header .navbar ul li a:hover {
 }
 #home .btn span {
   font-weight: 700;
-  font-size: 20px;
+  font-size: 1.8rem;
   letter-spacing: 0.1rem;
 }
 #home .btn i {
   margin-left: 0.3rem;
-  font-size: 20px;
+  font-size: 1.7rem;
   transition: 0.3s;
 }
 #home .btn:hover {
   background: #1a047e;
 }
 #home .btn:hover i {
-  transform: translateX(5px);
+  transform: translateX(4px);
 }
 /* social icons start */
 .socials {
   position: relative;
-  margin-top: 9rem;
+  margin-top: 8rem;
 }
 .socials .social-icons {
   padding-left: 0;
@@ -356,6 +356,7 @@ header .navbar ul li a:hover {
   margin-top: 50px;
   flex-direction: row; 
   justify-content: center; 
+  height: 80vh;
 }
 
 #about .box img{
@@ -373,7 +374,6 @@ header .navbar ul li a:hover {
 }
 
 #about .detail{
-  margin-top: 20px ;
   margin-left: 90px;
   padding: 70px 100px ;
   padding-top: 30px;
@@ -386,12 +386,12 @@ header .navbar ul li a:hover {
 #about .detail h2{
   font-size: 32px;
   font-weight: 1000;
+  text-align: start;
 }
 
 #about .detail h3{
   font-size: 21px;
-  font-weight: 600;
-  
+  font-weight: 600;  
 }
 
 #about .detail p{
