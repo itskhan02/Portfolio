@@ -25,12 +25,12 @@ export const Contact = () => {
     <section id="contact">
       <div>
         <h1>
-          <i class="fa-solid fa-headset"></i> Get In<span> Touch</span>
+          <i class="fas fa-headset"></i> Get In<span> Touch</span>
         </h1>
       </div>
       <div className="contact">
         <div className="feed">
-          <img src="src/images/contact.png"></img>
+          <img src="public/images/contact.png"></img>
         </div>
         <div className="form">
           <form ref={form} onSubmit={sendEmail}>
@@ -69,7 +69,7 @@ export const Contact = () => {
               <button type="submit" value="Send">
                 {" "}
                 Submit
-                <i class="fa-regular fa-paper-plane"></i>
+                <i class="fas fa-paper-plane"></i>
               </button>
             </div>
           </form>

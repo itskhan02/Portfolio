@@ -7,7 +7,7 @@ const Skill = () => {
       <section id='skills'>
       <div>
       
-      <h1><i class="fa-solid fa-laptop-code"></i>Skills</h1>
+      <h1><i class="fas fa-laptop-code"></i>Skills</h1>
     </div>
     <div className='container'>
     <div className='skill'>

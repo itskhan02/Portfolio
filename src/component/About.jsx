@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const About = () => {
   return (
@@ -6,12 +6,12 @@ const About = () => {
       <section id="about">
     <div className="about">
       <h1>
-        <i class="fa-solid fa-user-large"></i>About <span>Me</span>
+      <i class="fas fa-user"></i>About <span>Me</span>
       </h1>
     </div>
     <div className="box">
       <div>
-        <img src="src/images/hero3.png" alt="" />
+        <img src="public/images/hero3.png" alt="" />
       </div>
       <div className="detail">
         <h2>I'm Wasim Akram</h2>
@@ -33,10 +33,10 @@ const About = () => {
         <div>
         <button className="btn">
         <a href='https://drive.google.com/file/d/1TgWSWGiOmGBzimh57ylRIxa3Au1q-QCl/view?usp=drive_link'>
-        Resume <i class="fa-solid fa-angles-right fa-sm"></i></a></button>
+        Resume <i class="fas fa-arrow-right"></i></a></button>
       </div>
       </div>
-     
+
     </div>
   </section>
     </>

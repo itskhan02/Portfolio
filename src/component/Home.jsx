@@ -1,6 +1,6 @@
 import React from "react";
 import About from "./About";
- import Skill from "./Skill";
+import Skill from "./Skill";
 import Education from "./Education";
 import Project from "./Project";
 import Contact from "./Contact";
@@ -14,7 +14,7 @@ const Home = () => {
     <header>
     <div className="logo">
     <a href="/" >
-    <img src="src\images\logo.png"></img>
+    <img src="public/images/logo.png"></img>
       Wasim Akram {""}
     </a></div>
     <div id="menu" ><i class="fas fa-bars"></i></div>
@@ -49,7 +49,7 @@ const Home = () => {
       </div>
         </div> 
         <div className="hero">
-          <img src="src\images\hero.png"></img>
+          <img src="public\images\hero.png"></img>
         </div> 
 
       </section>
