@@ -30,7 +30,7 @@ export const Contact = () => {
       </div>
       <div className="contact">
         <div className="feed">
-          <img src="public/images/contact.png"></img>
+          <img src="src/images/contact.png"></img>
         </div>
         <div className="form">
           <form ref={form} onSubmit={sendEmail}>
