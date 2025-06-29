@@ -2,14 +2,15 @@ import React from "react";
 
 const Education = () => {
   return (
-    <section id="education">
+  <>
+      <section id="education">
     <div>
       <h1><i class="fas fa-graduation-cap"></i>Education <span>&</span> Qualification</h1>
       <h2>
         The purpose of education is to replace an empty mind with an open one.
       </h2>
     </div>
-    <div class="edu">
+    <div className="edu">
         <div className="college">
           <div className="img">
             <img src="src/images/College.jpg" alt=""/>
@@ -44,6 +45,7 @@ const Education = () => {
         </div>
       </div>
     </section>
+  </>
   );
 };
 

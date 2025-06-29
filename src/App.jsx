@@ -1,7 +1,9 @@
 import React from 'react'
 import Home from './component/Home'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import './component/css/Style.css'
+import './component/css/Style.css';
+
+
 
 function App() {
 

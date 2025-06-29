@@ -6,7 +6,7 @@ const About = () => {
       <section id="about">
     <div className="about">
       <h1>
-      <i class="fas fa-user"></i>About <span>Me</span>
+      <i className="fas fa-user"></i>About <span>Me</span>
       </h1>
     </div>
     <div className="box">
@@ -33,7 +33,7 @@ const About = () => {
         <div>
         <button className="btn">
         <a href='https://drive.google.com/file/d/1TgWSWGiOmGBzimh57ylRIxa3Au1q-QCl/view?usp=drive_link'>
-        Resume <i class="fas fa-arrow-right"></i></a></button>
+        Resume <i className="fas fa-arrow-right"></i></a></button>
       </div>
       </div>
 

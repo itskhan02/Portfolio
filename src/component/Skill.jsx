@@ -9,7 +9,7 @@ const Skill = () => {
       
       <h1><i class="fas fa-laptop-code"></i>Skills</h1>
     </div>
-    <div className='container'>
+    <div className='cont'>
     <div className='skill'>
       <Data/>
     </div>
@@ -17,6 +17,6 @@ const Skill = () => {
       </section>
     </>
   )
-}
+};
 
 export default Skill
