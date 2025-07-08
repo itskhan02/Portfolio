@@ -33,7 +33,7 @@ const Contact = () => {
       </div>
       <div className="contact">
         <div className="feed">
-          <img src={"../public/contact.png"}></img>
+          <img src={"/contact.png"}></img>
         </div>
         <div className="form">
           <form ref={form} onSubmit={sendEmail}>

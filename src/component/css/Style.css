@@ -170,7 +170,7 @@ header .navbar ul li a:hover {
 /* ----------------------home page starts------------------- */
 
 #home {
-  background-image: url(../public/bg5.jpg);
+  background-image: url(/bg5.jpg);
   height: 95vh;
   width: 100%;
   padding: 3rem 4rem;
