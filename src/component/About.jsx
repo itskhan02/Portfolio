@@ -11,7 +11,7 @@ const About = () => {
     </div>
     <div className="box">
       <div>
-        <img src={"public/hero3.png"} alt="" />
+        <img src={"../public/hero3.png"} alt="" />
       </div>
       <div className="detail">
         <h2>I'm Wasim Akram</h2>

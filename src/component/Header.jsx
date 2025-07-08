@@ -19,7 +19,7 @@ const Header = () => {
       <header>
         <div className="logo">
           <a href="/">
-          <img src={"public/logo.png"} alt="Logo" />
+          <img src={"../public/logo.png"} alt="Logo" />
             Wasim Akram{" "}
           </a>
         </div>
