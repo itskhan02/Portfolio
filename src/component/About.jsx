@@ -25,7 +25,7 @@ const About = () => {
         </p>
         <p>
           <span>Email:</span>
-          <a href="mailto:akramwasim19799@gmail">akramwasim19799@gmail </a>
+          <a href="mailto:akramwasim19799@gmail">akramwasim19799@gmail.com </a>
         </p>
         <p>
           <span>Place:</span>Lalru, Chandigarh, Punjab, India - 140501
