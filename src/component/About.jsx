@@ -1,46 +1,34 @@
-import React from 'react';
+import { Download, Mail, MapPin } from "lucide-react";
+import { motion } from "framer-motion";
+import { assetUrl } from "../api/client";
 
-const About = () => {
+const About = ({ settings, resume }) => {
   return (
-    <>
-      <section id="about">
-    <div className="about">
-      <h1>
-      <i className="fas fa-user"></i>About <span>Me</span>
-      </h1>
-    </div>
-    <div className="box">
-      <div>
-        <img src={"/hero3.png"} alt="" />
+    <section id="about" className="section about-section">
+      <motion.div className="section-heading" initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        <span className="eyebrow">About Me</span>
+        <h2>Frontend craft with full-stack curiosity.</h2>
+      </motion.div>
+      <div className="about-grid">
+        <motion.div className="about-portrait glass-panel" initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+          <img src="/hero2.png" alt={settings.name} loading="lazy" />
+        </motion.div>
+        <motion.div className="about-content" initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+          <div className="about-pill">Designing thoughtful experiences with modern tools</div>
+          <h3>I'm {settings.name}</h3>
+          <p className="role">{settings.jobTitle}</p>
+          <p>{settings.about}</p>
+          <div className="info-list">
+            <a href={`mailto:${settings.email}`}><Mail size={18} /> {settings.email}</a>
+            <span><MapPin size={18} /> {settings.location}</span>
+          </div>
+          <a className="button button-primary" href={assetUrl(resume?.fileUrl)} target="_blank" rel="noreferrer" download>
+            <Download size={18} /> Resume
+          </a>
+        </motion.div>
       </div>
-      <div className="detail">
-        <h2>I'm Wasim Akram</h2>
-        <h3>Frontend Developer</h3>
-        <p>
-          I am a Frontend Developer based in chandigarh, Punjab, India. 
-          I am very passionate about improving my coding skills & developing
-          applications & websites. I build WebApps and Websites using MERN
-          Stack. Working for myself to improve my skills. Love to build
-          Full-Stack clones.
-        </p>
-        <p>
-          <span>Email:</span>
-          <a href="mailto:akramwasim19799@gmail">akramwasim19799@gmail.com </a>
-        </p>
-        <p>
-          <span>Place:</span>Lalru, Chandigarh, Punjab, India - 140501
-        </p>
-        <div>
-        <button className="btn">
-        <a href='https://drive.google.com/file/d/1TgWSWGiOmGBzimh57ylRIxa3Au1q-QCl/view?usp=drive_link'>
-        Resume <i className="fas fa-arrow-right"></i></a></button>
-      </div>
-      </div>
-
-    </div>
-  </section>
-    </>
-  )
-}
+    </section>
+  );
+};
 
 export default About

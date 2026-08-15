@@ -1,22 +1,31 @@
-import React from 'react'
-import Home from './component/Home'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import './component/css/Style.css';
-
-
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Home from "./component/Home";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminLogin from "./pages/AdminLogin";
+import { ADMIN_DASHBOARD_PATH, ADMIN_LOGIN_PATH } from "./config/admin";
 
 function App() {
-
   return (
-    <>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
         <Routes>
-          <Route exact path="/" element={<Home />}></Route>
-          
+          <Route path="/" element={<Home />} />
+          <Route path={ADMIN_LOGIN_PATH} element={<AdminLogin />} />
+          <Route
+            path={ADMIN_DASHBOARD_PATH}
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </BrowserRouter>
-    </>
-  )
+      </AuthProvider>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

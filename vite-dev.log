@@ -1,0 +1,64 @@
+
+> profile@0.0.0 dev
+> vite --host 127.0.0.1
+
+
+  [32m[1mVITE[22m v7.0.2[39m  [2mready in [0m[1m867[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5173[22m/[39m
+[2m4:24:55 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mpackage.json[22m
+[2m4:29:43 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mserver/index.js[22m
+[2m4:29:45 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mserver/index.js[22m
+[2m4:29:48 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mserver/index.js[22m
+[2m4:29:49 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mserver/index.js[22m
+[2m4:30:50 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/component/Contact.jsx, /src/component/css/Style.css[22m
+[2m4:31:04 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/component/Contact.jsx, /src/component/css/Style.css[22m
+[2m4:31:30 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/component/Contact.jsx, /src/component/css/Style.css[22m
+[2m4:31:35 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/component/Contact.jsx, /src/component/css/Style.css[22m
+[2m4:31:37 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/component/Contact.jsx, /src/component/css/Style.css[22m
+[2m4:32:52 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/component/Contact.jsx, /src/component/css/Style.css[22m
+[2m4:34:08 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/component/Contact.jsx, /src/component/css/Style.css[22m
+[2m4:34:29 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/component/Contact.jsx, /src/component/css/Style.css[22m
+[2m4:39:09 pm[22m [36m[1m[vite][22m[39m [32m.env changed, restarting server...[39m
+[2m4:39:09 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m Re-optimizing dependencies because lockfile has changed
+[2m4:39:09 pm[22m [36m[1m[vite][22m[39m server restarted.
+[2m4:39:24 pm[22m [36m[1m[vite][22m[39m [32m.env changed, restarting server...[39m
+[2m4:39:24 pm[22m [36m[1m[vite][22m[39m server restarted.
+[2m4:39:48 pm[22m [36m[1m[vite][22m[39m [32m.env changed, restarting server...[39m
+[2m4:39:48 pm[22m [36m[1m[vite][22m[39m server restarted.
+[2m4:39:59 pm[22m [36m[1m[vite][22m[39m [32m.env changed, restarting server...[39m
+[2m4:39:59 pm[22m [36m[1m[vite][22m[39m server restarted.
+[2m4:42:07 pm[22m [36m[1m[vite][22m[39m [32m.env changed, restarting server...[39m
+[2m4:42:07 pm[22m [36m[1m[vite][22m[39m server restarted.
+[2m4:46:15 pm[22m [36m[1m[vite][22m[39m [32m.env changed, restarting server...[39m
+[2m4:46:15 pm[22m [36m[1m[vite][22m[39m server restarted.
+[2m4:46:18 pm[22m [36m[1m[vite][22m[39m [32m.env changed, restarting server...[39m
+[2m4:46:18 pm[22m [36m[1m[vite][22m[39m server restarted.
+[2m4:46:29 pm[22m [36m[1m[vite][22m[39m [32m.env changed, restarting server...[39m
+[2m4:46:29 pm[22m [36m[1m[vite][22m[39m server restarted.
+[2m4:49:02 pm[22m [36m[1m[vite][22m[39m [32m.env changed, restarting server...[39m
+[2m4:49:02 pm[22m [36m[1m[vite][22m[39m server restarted.
+[2m4:49:06 pm[22m [36m[1m[vite][22m[39m [32m.env changed, restarting server...[39m
+[2m4:49:06 pm[22m [36m[1m[vite][22m[39m server restarted.
+[2m4:49:50 pm[22m [36m[1m[vite][22m[39m [32m.env changed, restarting server...[39m
+[2m4:49:51 pm[22m [36m[1m[vite][22m[39m server restarted.
+[2m4:50:30 pm[22m [36m[1m[vite][22m[39m [32m.env changed, restarting server...[39m
+[2m4:50:30 pm[22m [36m[1m[vite][22m[39m server restarted.
+[2m4:50:33 pm[22m [36m[1m[vite][22m[39m [32m.env changed, restarting server...[39m
+[2m4:50:33 pm[22m [36m[1m[vite][22m[39m server restarted.
+[2m4:50:38 pm[22m [36m[1m[vite][22m[39m [32m.env changed, restarting server...[39m
+[2m4:50:38 pm[22m [36m[1m[vite][22m[39m server restarted.
+[2m4:53:51 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mserver/middleware/validate.js[22m
+[2m4:54:02 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mserver/middleware/validate.js[22m
+[2m4:54:49 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/component/Contact.jsx, /src/component/css/Style.css[22m
+[2m4:54:51 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/component/Contact.jsx, /src/component/css/Style.css[22m
+[2m4:59:00 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mserver/services/email.js[22m
+[2m5:02:48 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mserver/services/email.js[22m
+[2m5:04:43 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mserver/routes/contact.js[22m
+[2m5:04:52 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mserver/routes/contact.js[22m
+[2m5:05:10 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mserver/routes/contact.js[22m
+[2m5:06:02 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mserver/routes/contact.js[22m
+[2m5:10:15 pm[22m [36m[1m[vite][22m[39m [32m.env changed, restarting server...[39m
+[2m5:10:15 pm[22m [36m[1m[vite][22m[39m server restarted.
+[2m5:10:18 pm[22m [36m[1m[vite][22m[39m [32m.env changed, restarting server...[39m
+[2m5:10:18 pm[22m [36m[1m[vite][22m[39m server restarted.
