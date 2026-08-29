@@ -1,7 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Home from "./component/Home";
+import Home from "./pages/Home";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminLogin from "./pages/AdminLogin";
 import { ADMIN_DASHBOARD_PATH, ADMIN_LOGIN_PATH } from "./config/admin";
