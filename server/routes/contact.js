@@ -1,7 +1,6 @@
 import express from "express";
 import { body } from "express-validator";
 import { sendContactEmail } from "../services/email.js";
-import PortfolioSettings from "../models/PortfolioSettings.js";
 import { handleValidation } from "../middleware/validate.js";
 
 const router = express.Router();
@@ -34,11 +33,21 @@ router.post("/", contactValidators, handleValidation, async (req, res) => {
   try {
     const { name, email, phone, message } = req.body;
 
-    const settings = await PortfolioSettings.findOne();
-
     if (!process.env.CONTACT_EMAIL) {
       return res.status(500).json({
         message: "Contact email is not configured.",
+      });
+    }
+
+    if (!process.env.RESEND_API_KEY) {
+      return res.status(500).json({
+        message: "Email service is not configured.",
+      });
+    }
+
+    if (!process.env.RESEND_FROM_EMAIL) {
+      return res.status(500).json({
+        message: "Email sender is not configured.",
       });
     }
 

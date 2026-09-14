@@ -22,8 +22,8 @@ const Contact = ({ settings }) => {
   const sendEmail = async (e) => {
     e.preventDefault();
 
-    setStatus("Sending...");
-    setStatusType("info");
+    setStatus("");
+    setStatusType("");
     setSending(true);
 
     try {
@@ -205,7 +205,7 @@ return (
             </label>
           </div>
 
-          {/* {status && (
+          {status && (
             <p
               className={`text-sm ${
                 statusType === "error"
@@ -218,7 +218,7 @@ return (
             >
               {status}
             </p>
-          )} */}
+          )}
 
           <div className="flex justify-start">
             <button
