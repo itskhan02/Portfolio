@@ -37,7 +37,7 @@ const Project = ({ projects = [] }) => {
               delay: index * 0.08,
             }}
           >
-            <div className="relative w-full overflow-hidden rounded-[20px] border border-white/[0.08] bg-[#080b18]">
+            <div className="relative w-full h-3/4  flex items-center overflow-hidden rounded-[20px] border border-white/[0.08] bg-[#080b18]">
               <div className="aspect-video w-full overflow-hidden rounded-[19px]">
                 <img
                   src={assetUrl(project.imageUrl) || "/hero.png"}

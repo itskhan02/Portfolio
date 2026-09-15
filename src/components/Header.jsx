@@ -60,7 +60,7 @@ const Header = ({ settings, resume }) => {
     <header
       className="
       fixed left-1/2 top-4 z-50 flex w-[calc(100%-32px)]
-      max-w-[1200px] -translate-x-1/2
+      max-w-[1000px] -translate-x-1/2
       items-center justify-between
       rounded-[22px]
       border border-white/10
