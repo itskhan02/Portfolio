@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const API_ROOT =
-  import.meta.env.VITE_API_URL || "https://portfolio-79gt.onrender.com/api";
+  import.meta.env.VITE_API_URL || "https://itskhan.onrender.com/api";
 export const SERVER_ROOT = API_ROOT.replace(/\/api\/?$/, "");
 export const ADMIN_TOKEN_KEY = "portfolio_admin_token";
 
