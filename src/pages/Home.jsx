@@ -11,7 +11,14 @@ import Footer from "../components/Footer";
 import { usePortfolioData } from "../hooks/usePortfolioData";
 import { assetUrl } from "../api/client";
 import { ADMIN_LOGIN_PATH } from "../config/admin";
-import { ArrowRight, Download, Github, Instagram, Linkedin, Send } from "lucide-react";
+import {
+  ArrowRight,
+  Download,
+  Github,
+  Instagram,
+  Linkedin,
+  Send,
+} from "lucide-react";
 import { motion } from "framer-motion";
 
 const Home = () => {
@@ -21,7 +28,7 @@ const Home = () => {
   const heroHighlights = [
     { label: "Focus", value: "React, Node, UI" },
     { label: "Availability", value: "Open to opportunities" },
-    { label: "Approach", value: "Performance-first design" }
+    { label: "Approach", value: "Performance-first design" },
   ];
 
   useEffect(() => {
@@ -40,31 +47,11 @@ const Home = () => {
       <Header settings={settings} resume={resume} />
       <section
         id="home"
-        className="
-    relative mx-auto grid min-h-screen
-    w-[calc(100%-40px)] max-w-[1200px]
-    items-center gap-12
-    py-32
-    lg:grid-cols-[1.05fr_0.95fr]
-  "
+        className="relative mx-auto grid min-h-screen w-[calc(100%-40px)] max-w-[1200px] items-center gap-12 pt-32 lg:grid-cols-[1.05fr_0.95fr]"
       >
-        <div
-          className="
-    pointer-events-none absolute -left-20 top-[20%]
-    -z-10 h-80 w-80 rounded-full
-    bg-[var(--cyan)]/30
-    blur-[70px]
-  "
-        />
+        <div className="pointer-events-none absolute -left-20 top-[20%]-z-10 h-80 w-80 rounded-full bg-[var(--cyan)]/30 blur-[70px]" />
 
-        <div
-          className="
-    pointer-events-none absolute bottom-[16%] right-[10%]
-    -z-10 h-80 w-80 rounded-full
-    bg-purple-400/25
-    blur-[70px]
-  "
-        />
+        <div className=" pointer-events-none absolute bottom-[16%] right-[10%]-z-10 h-80 w-80 rounded-full bg-purple-400/25 blur-[70px]" />
 
         <motion.div
           className="max-w-3xl"
@@ -72,26 +59,12 @@ const Home = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65 }}
         >
-          <span
-            className="
-      mb-4 inline-flex rounded-full
-      border border-cyan-400/35
-      bg-cyan-400/[0.08]
-      px-3 py-1.5
-      text-xs font-extrabold uppercase
-      text-[#8ff7e2]
-    "
-          >
+          <span className="mb-4 inline-flex rounded-full border border-cyan-400/35 bg-cyan-400/[0.08] px-3 py-1.5 text-xs font-extrabold uppercase text-[#8ff7e2]">
             Hi! There...
           </span>
 
           <h1
-            className="
-      font-[Poppins,Inter,sans-serif]
-      text-[clamp(2.8rem,7vw,5.5rem)]
-      font-bold leading-[0.98]
-    "
-          >
+            className="font-[Poppins,Inter,sans-serif] text-[clamp(2.8rem,7vw,5.5rem)] font-bold leading-[0.98]">
             I'm{" "}
             <span className="bg-gradient-to-r from-cyan-300 to-purple-400 bg-clip-text text-transparent">
               {settings.name}
@@ -99,39 +72,19 @@ const Home = () => {
           </h1>
 
           <h2
-            className="
-      mt-5
-      font-[Poppins,Inter,sans-serif]
-      text-[clamp(1.4rem,3vw,2.4rem)]
-      font-semibold leading-tight
-    "
-          >
+            className="mt-5 font-[Poppins,Inter,sans-serif] text-[clamp(1.4rem,3vw,2.4rem)] font-semibold leading-tight">
             And I'm a <span className="text-cyan-300">{settings.jobTitle}</span>
           </h2>
 
           <p
-            className="
-      mt-6 max-w-2xl
-      text-base leading-8
-      text-[var(--muted)]
-      sm:text-lg
-    "
-          >
+            className="mt-6 max-w-2xl text-base leading-8 text-[var(--muted)] sm:text-lg" >
             {settings.summary}
           </p>
 
           <div className="mt-7 flex flex-wrap gap-3">
             <a
               href="#about"
-              className="
-          inline-flex min-h-[46px]
-          items-center justify-center gap-2.5
-          rounded-full
-          bg-gradient-to-r from-[var(--primary)] to-[#6d4bea]
-          px-5 font-extrabold
-          transition-all hover:-translate-y-0.5
-        "
-            >
+              className="inline-flex min-h-[46px] items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-[var(--primary)] to-[#6d4bea] px-5 font-extraboldtransition-all hover:-translate-y-0.5">
               About Me
               <ArrowRight size={18} />
             </a>
@@ -200,11 +153,7 @@ const Home = () => {
             )}
           </div>
 
-          <div className="mt-7 flex gap-3">
-            {/* Keep your existing social links here */}
-          </div>
-
-          <div className="mt-5 flex flex-wrap gap-2">
+          {/* <div className="mt-5 flex flex-wrap gap-2">
             {[
               "Fast, responsive UI",
               "Full-stack thinking",
@@ -224,7 +173,7 @@ const Home = () => {
                 {badge}
               </span>
             ))}
-          </div>
+          </div> */}
         </motion.div>
 
         <motion.div

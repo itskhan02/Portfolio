@@ -25,18 +25,7 @@ const Education = ({ items = [] }) => {
         {items.map((item, index) => (
           <motion.article
             key={`${item.title}-${index}`}
-            className="
-              group grid grid-cols-1 items-center gap-5 overflow-hidden
-              rounded-[24px] border border-white/10
-              bg-white/[0.045] p-5
-              shadow-[0_20px_60px_rgba(0,0,0,0.25)]
-              backdrop-blur-xl
-              transition-all duration-300
-              hover:-translate-y-1 hover:border-cyan-400/20
-              hover:bg-white/[0.06]
-              sm:grid-cols-[190px_1fr]
-              lg:grid-cols-[260px_1fr_auto] lg:gap-7 lg:p-6
-            "
+            className="group grid grid-cols-1 items-center gap-5 overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.045] p-4 shadow-[0_20px_60px_rgba(0,0,0,0.25)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/20 hover:bg-white/[0.06] sm:grid-cols-[190px_1fr] lg:grid-cols-[260px_1fr_auto] lg:gap-7 lg:p-6"
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -47,17 +36,11 @@ const Education = ({ items = [] }) => {
                 src={item.image}
                 alt=""
                 loading="lazy"
-                className="
-                  h-[180px] w-full object-cover
-                  transition-transform duration-500
-                  group-hover:scale-105
-                  sm:h-[140px]
-                  lg:h-[160px] lg:w-[260px]
-                "
+                className="h-[180px] w-full object-cover transition-transform duration-500 group-hover:scale-105 sm:h-[140px] lg:h-[160px] lg:w-[260px]"
               />
             </div>
 
-            <div className="flex min-w-0 flex-col items-center text-center sm:items-start sm:text-left">
+            <div className="flex min-w-0 flex-row gap-4 items-center text-center sm:items-start sm:text-left">
               <div
                 className="
                 mb-3 flex h-10 w-10 shrink-0 items-center justify-center
@@ -71,13 +54,15 @@ const Education = ({ items = [] }) => {
                 <GraduationCap size={21} />
               </div>
 
-              <h3 className="w-full text-lg font-semibold leading-snug text-white sm:text-xl lg:text-[1.35rem]">
-                {item.title}
-              </h3>
+              <div>
+                <h3 className="w-full text-lg font-semibold leading-snug text-white sm:text-xl lg:text-[1.35rem]">
+                  {item.title}
+                </h3>
 
-              <p className="mt-2 w-full text-sm leading-7 text-[var(--muted)] sm:text-base">
-                {item.institution}
-              </p>
+                <p className="mt-2 w-full text-sm leading-7 text-[var(--muted)] sm:text-base">
+                  {item.institution}
+                </p>
+              </div>
             </div>
 
             <div

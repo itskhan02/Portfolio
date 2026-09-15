@@ -11,7 +11,10 @@ const router = express.Router();
 
 router.post(
   "/login",
-  [body("email").isEmail().normalizeEmail(), body("password").isLength({ min: 8 })],
+  [
+    body("email").trim().isEmail().toLowerCase(),
+    body("password").isLength({ min: 8 }),
+  ],
   handleValidation,
   async (req, res) => {
     const { email, password } = req.body;

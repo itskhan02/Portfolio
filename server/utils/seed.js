@@ -7,23 +7,16 @@ import { defaultProjects, defaultSettings } from "../data/defaults.js";
 
 export const seedDatabase = async () => {
   const adminCredentials = getAdminCredentials();
+  const existingAdmin = await Admin.findOne();
 
-  if (adminCredentials) {
-    const existingAdmin = await Admin.findOne({ email: adminCredentials.email });
+  if (!existingAdmin && adminCredentials) {
     const password = await bcrypt.hash(adminCredentials.password, 12);
-
-    if (!existingAdmin) {
-      await Admin.deleteMany({});
-      await Admin.create({ email: adminCredentials.email, password });
-      console.log("Admin account seeded");
-    } else {
-      existingAdmin.password = password;
-      await existingAdmin.save();
-      await Admin.deleteMany({ _id: { $ne: existingAdmin._id } });
-      console.log("Admin account synced");
-    }
-  } else {
-    console.warn("ADMIN_EMAIL and ADMIN_PASSWORD are required to seed the single admin account.");
+    await Admin.create({ email: adminCredentials.email, password });
+    console.log("Admin account seeded");
+  } else if (existingAdmin) {
+    console.log("Using existing admin account from database");
+  } else if (process.env.NODE_ENV === "production") {
+    console.warn("No admin account found. Set ADMIN_EMAIL and ADMIN_PASSWORD once to seed the first admin account.");
   }
 
   const settingsCount = await PortfolioSettings.countDocuments();

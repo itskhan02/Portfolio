@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Download, Menu, X } from "lucide-react";
 import { assetUrl } from "../api/client";
+import { ADMIN_LOGIN_PATH } from "../config/admin";
 
 const navItems = [
   { id: "home", label: "Home" },
@@ -56,7 +57,8 @@ const Header = ({ settings, resume }) => {
   }, []);
 
   return (
-    <header className="
+    <header
+      className="
       fixed left-1/2 top-4 z-50 flex w-[calc(100%-32px)]
       max-w-[1200px] -translate-x-1/2
       items-center justify-between
@@ -67,21 +69,16 @@ const Header = ({ settings, resume }) => {
       shadow-[0_20px_60px_rgba(0,0,0,0.3)]
       backdrop-blur-xl
       md:px-5
-    ">
+    "
+    >
       <a
         href="#home"
         className="flex items-center gap-2 font-bold"
         aria-label="Go to home"
       >
-        <img
-          src="/logo1.png"
-          alt=""
-          className="h-10 w-10 object-contain"
-        />
+        <img src="/logo1.png" alt="" className="h-10 w-10 object-contain" />
 
-        <span>
-          {settings?.name?.replace("MD ", "") || "Wasim Akram"}
-        </span>
+        <span>{settings?.name?.replace("MD ", "") || "Wasim Akram"}</span>
       </a>
 
       <button
@@ -99,20 +96,7 @@ const Header = ({ settings, resume }) => {
       </button>
 
       <nav
-        className={`
-          absolute left-0 right-0 top-[calc(100%+10px)]
-          ${open ? "flex" : "hidden"}
-          flex-col gap-1
-          rounded-[22px]
-          border border-white/10
-          bg-[#070b17]/95
-          p-3
-          shadow-[0_28px_90px_rgba(0,0,0,0.42)]
-          backdrop-blur-xl
-          md:static md:flex md:flex-row md:items-center
-          md:gap-1 md:border-0 md:bg-transparent
-          md:p-0 md:shadow-none md:backdrop-blur-none
-        `}
+        className={`relative left-0 right-0 top-[calc(100%+10px)] ${open ? "flex" : "hidden"} flex-col gap-1 rounded-[22px] border border-white/10 bg-[#070b17]/95 p-3 shadow-[0_28px_90px_rgba(0,0,0,0.42)] backdrop-blur-xl md:static md:flex md:flex-row md:items-center md:gap-1 md:border-0 md:bg-transparent md:p-0 md:shadow-none md:backdrop-blur-none`}
         aria-label="Primary navigation"
       >
         {navItems.map((item) => (
