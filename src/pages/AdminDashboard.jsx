@@ -692,9 +692,8 @@ const EditableList = ({ title, items, fields, onChange, onAdd, onRemove }) => {
       {items.map((item, index) => (
         <div className="editable-row" key={`${title}-${index}`}>
           {fields.map((field) => {
-            /*
-             * IMAGE / ICON FIELD
-             */
+          
+          { /* image/icon  */}
             if (isImageField(field)) {
               return (
                 <div className="settings-image-field" key={field}>
@@ -746,10 +745,6 @@ const EditableList = ({ title, items, fields, onChange, onAdd, onRemove }) => {
                 </div>
               );
             }
-
-            /*
-             * DESCRIPTION FIELD
-             */
             if (field === "description") {
               return (
                 <textarea
@@ -763,9 +758,6 @@ const EditableList = ({ title, items, fields, onChange, onAdd, onRemove }) => {
               );
             }
 
-            /*
-             * NORMAL TEXT FIELD
-             */
             return (
               <input
                 key={field}
