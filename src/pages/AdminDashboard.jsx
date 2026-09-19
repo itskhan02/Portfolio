@@ -596,12 +596,17 @@ const AdminDashboard = () => {
 
             <EditableList
               title="Skills"
-              items={settings.skills || []}
+              items={settings.skills}
               fields={["name", "icon"]}
               onChange={(index, key, value) =>
                 updateArrayItem("skills", index, key, value)
               }
-              onAdd={() => addArrayItem("skills", { name: "", icon: "" })}
+              onAdd={() =>
+                addArrayItem("skills", {
+                  name: "",
+                  icon: "",
+                })
+              }
               onRemove={(index) => removeArrayItem("skills", index)}
             />
             <EditableList
@@ -654,48 +659,88 @@ const AdminDashboard = () => {
 };
 
 const EditableList = ({ title, items, fields, onChange, onAdd, onRemove }) => {
-  const handleImageUpload = async (index, file) => {
-    if (!file) return;
-    const image = await readImageFile(file);
-    onChange(index, "image", image);
-  };
+ const handleImageUpload = async (index, field, file) => {
+   if (!file) return;
+
+   try {
+     const image = await readImageFile(file);
+     onChange(index, field, image);
+   } catch (error) {
+     console.error("Image upload failed:", error);
+   }
+ };
 
   return (
-  <div className={`editable-list editable-list--${title.toLowerCase()}`}>
-    <div className="editable-list-heading">
-      <h3>{title}</h3>
-      <button className="button button-ghost" type="button" onClick={onAdd}><Plus size={17} /> Add</button>
-    </div>
-    {items.map((item, index) => (
-      <div className="editable-row" key={`${title}-${index}`}>
-        {fields.map((field) => (
-          field === "image" ? (
-            <div className="settings-image-field" key={field}>
-              <label
-                className="settings-image-preview"
-                onDragOver={(event) => event.preventDefault()}
-                onDrop={(event) => {
-                  event.preventDefault();
-                  handleImageUpload(index, event.dataTransfer.files?.[0]);
-                }}
-              >
-                {item[field] ? <img src={assetUrl(item[field])} alt="" /> : <span><ImagePlus size={20} /> Upload image</span>}
-                <input type="file" accept="image/*" onChange={(event) => handleImageUpload(index, event.target.files?.[0])} />
-              </label>
-              <button className="button button-ghost" type="button" onClick={() => onChange(index, field, "")}>Delete Image</button>
-            </div>
-          ) : field === "description" ? (
-            <textarea key={field} value={item[field] || ""} onChange={(event) => onChange(index, field, event.target.value)} placeholder={field} />
-          ) : (
-            <input key={field} value={item[field] || ""} onChange={(event) => onChange(index, field, event.target.value)} placeholder={field} />
-          )
-        ))}
-        <button className="icon-button danger" type="button" onClick={() => onRemove(index)} aria-label={`Remove ${title} item`}>
-          <Trash2 size={17} />
+    <div className={`editable-list editable-list--${title.toLowerCase()}`}>
+      <div className="editable-list-heading">
+        <h3>{title}</h3>
+        <button className="button button-ghost" type="button" onClick={onAdd}>
+          <Plus size={17} /> Add
         </button>
       </div>
-    ))}
-  </div>
+      {items.map((item, index) => (
+        <div className="editable-row" key={`${title}-${index}`}>
+          {fields.map((field) =>
+            field === "image" || field === "icon" ? (
+              <div className="settings-image-field" key={field}>
+                <label
+                  className="settings-image-preview"
+                  onDragOver={(event) => event.preventDefault()}
+                  onDrop={(event) => {
+                    event.preventDefault();
+                    handleImageUpload(index, event.dataTransfer.files?.[0]);
+                  }}
+                >
+                  {item[field] ? (
+                    <img src={assetUrl(item[field])} alt="" />
+                  ) : (
+                    <span>
+                      <ImagePlus size={20} /> Upload image
+                    </span>
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(event) =>
+                      handleImageUpload(index, event.target.files?.[0])
+                    }
+                  />
+                </label>
+                <button
+                  className="button button-ghost"
+                  type="button"
+                  onClick={() => onChange(index, field, "")}
+                >
+                  Delete Image
+                </button>
+              </div>
+            ) : field === "description" ? (
+              <textarea
+                key={field}
+                value={item[field] || ""}
+                onChange={(event) => onChange(index, field, event.target.value)}
+                placeholder={field}
+              />
+            ) : (
+              <input
+                key={field}
+                value={item[field] || ""}
+                onChange={(event) => onChange(index, field, event.target.value)}
+                placeholder={field}
+              />
+            ),
+          )}
+          <button
+            className="icon-button danger"
+            type="button"
+            onClick={() => onRemove(index)}
+            aria-label={`Remove ${title} item`}
+          >
+            <Trash2 size={17} />
+          </button>
+        </div>
+      ))}
+    </div>
   );
 };
 

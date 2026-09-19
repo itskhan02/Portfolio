@@ -1,4 +1,6 @@
+import React from "react";
 import { motion } from "framer-motion";
+import { assetUrl } from "../api/client";
 
 const initials = (name = "") =>
   name
@@ -10,6 +12,20 @@ const initials = (name = "") =>
     .toUpperCase();
 
 const Skill = ({ skills = [] }) => {
+
+  const getSkillIcon = (icon) => {
+    if (!icon) return "";
+
+    if (icon.startsWith("data:image/") || icon.startsWith("blob:")) {
+      return icon;
+    }
+    if (icon.startsWith("http://") || icon.startsWith("https://")) {
+      return icon;
+    }
+
+    return assetUrl(icon);
+  };
+
   return (
     <section
       id="skills"
@@ -57,8 +73,8 @@ const Skill = ({ skills = [] }) => {
             >
               {skill.icon ? (
                 <img
-                  src={skill.icon}
-                  alt=""
+                  src={getSkillIcon(skill.icon)}
+                  alt={skill.name}
                   loading="lazy"
                   className="h-12 w-12 object-contain"
                   onError={(event) => {
