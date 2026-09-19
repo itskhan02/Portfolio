@@ -58,18 +58,27 @@ const Skill = ({ skills = [] }) => {
               {skill.icon ? (
                 <img
                   src={skill.icon}
-                  alt=""
+                  alt={`${skill.name} logo`}
                   loading="lazy"
                   className="h-12 w-12 object-contain"
                   onError={(event) => {
                     event.currentTarget.style.display = "none";
-                    event.currentTarget.parentElement.dataset.fallback =
-                      initials(skill.name);
+
+                    const fallback =
+                      event.currentTarget.parentElement.querySelector(
+                        ".skill-fallback",
+                      );
+
+                    if (fallback) {
+                      fallback.style.display = "grid";
+                    }
                   }}
                 />
-              ) : (
-                initials(skill.name)
-              )}
+              ) : null}
+
+              <span className="skill-fallback hidden place-items-center text-xl font-black text-[#9be8ff]">
+                {initials(skill.name)}
+              </span>
             </div>
 
             <h3 className="mt-3.5 text-base font-semibold">{skill.name}</h3>
