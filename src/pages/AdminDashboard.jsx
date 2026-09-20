@@ -16,6 +16,22 @@ const emptyProject = {
   image: null,
 };
 
+const isValidHttpUrl = (value) => {
+  if (!value) return false;
+  try {
+    const url = new URL(value);
+    return ["http:", "https:"].includes(url.protocol);
+  } catch {
+    return false;
+  }
+};
+
+const getSkillMode = (skill = {}) => {
+  if (skill.iconFileId) return "upload";
+  if (skill.icon) return "url";
+  return "upload";
+};
+
 const AdminDashboard = () => {
   const { admin, logout } = useAuth();
   const [settings, setSettings] = useState(fallbackSettings);
@@ -99,7 +115,20 @@ const AdminDashboard = () => {
     setSettings((current) => ({ ...current, [collection]: [...(current[collection] || []), item] }));
   };
 
-  const removeArrayItem = (collection, index) => {
+  const removeArrayItem = async (collection, index) => {
+    if (collection === "skills") {
+      const item = settings[collection]?.[index];
+      const fileId = item?.iconFileId;
+
+      if (fileId) {
+        try {
+          await api.delete(`/images/${fileId}`);
+        } catch (error) {
+          console.warn("Skill GridFS cleanup failed:", error);
+        }
+      }
+    }
+
     setSettings((current) => ({
       ...current,
       [collection]: current[collection].filter((_, itemIndex) => itemIndex !== index)
@@ -590,7 +619,7 @@ const AdminDashboard = () => {
 
             <EditableList
               title="Skills"
-              items={settings.skills}
+              items={settings.skills || []}
               fields={["name", "icon"]}
               onChange={(index, key, value) =>
                 updateArrayItem("skills", index, key, value)
@@ -599,6 +628,7 @@ const AdminDashboard = () => {
                 addArrayItem("skills", {
                   name: "",
                   icon: "",
+                  iconFileId: null,
                 })
               }
               onRemove={(index) => removeArrayItem("skills", index)}
@@ -660,15 +690,184 @@ const EditableList = ({ title, items, fields, onChange, onAdd, onRemove }) => {
       const formData = new FormData();
       formData.append("image", file);
       formData.append("type", field === "icon" ? "skill" : "project");
+      const currentItem = items[index] || {};
       const response = await api.post("/images/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+
+      if (currentItem.iconFileId && currentItem.iconFileId !== response.data.fileId) {
+        try {
+          await api.delete(`/images/${currentItem.iconFileId}`);
+        } catch (deleteError) {
+          console.warn("Previous GridFS image cleanup failed:", deleteError);
+        }
+      }
 
       onChange(index, field, "");
       onChange(index, `${field}FileId`, response.data.fileId);
     } catch (error) {
       console.error("Image upload failed:", error);
     }
+  };
+
+  const renderSkillRow = (item, index) => {
+    const mode = getSkillMode(item);
+    const previewUrl = getStoredImageUrl({
+      fileId: item.iconFileId,
+      legacyUrl: item.icon,
+      fallback: "",
+    });
+
+    const handleUrlChange = (nextValue) => {
+      const currentFileId = item.iconFileId;
+      onChange(index, "icon", nextValue || "");
+      onChange(index, "iconFileId", null);
+
+      if (currentFileId) {
+        api.delete(`/images/${currentFileId}`).catch((error) => {
+          console.warn("Old GridFS image cleanup failed during URL switch:", error);
+        });
+      }
+    };
+
+    return (
+      <div className="editable-row" key={`${title}-${index}`}>
+        <input
+          value={item.name || ""}
+          onChange={(event) => onChange(index, "name", event.target.value)}
+          placeholder="Skill name"
+        />
+
+        <div className="settings-image-field">
+          <div className="admin-form-row" style={{ marginBottom: "8px" }}>
+            <button
+              className="button button-ghost"
+              type="button"
+              onClick={() => {
+                const currentFileId = item.iconFileId;
+                const currentUrl = item.icon || "";
+                onChange(index, "icon", "");
+                onChange(index, "iconFileId", currentFileId || null);
+
+                if (currentUrl && currentFileId) {
+                  onChange(index, "icon", "");
+                  onChange(index, "iconFileId", null);
+                }
+              }}
+            >
+              Upload Image
+            </button>
+            <button
+              className="button button-ghost"
+              type="button"
+              onClick={() => {
+                const currentFileId = item.iconFileId;
+                onChange(index, "icon", item.icon || "");
+                onChange(index, "iconFileId", null);
+                if (currentFileId) {
+                  api.delete(`/images/${currentFileId}`).catch((error) => {
+                    console.warn("Old GridFS image cleanup failed during URL mode switch:", error);
+                  });
+                }
+              }}
+            >
+              Image URL
+            </button>
+          </div>
+
+          {mode === "upload" ? (
+            <>
+              <label
+                className="settings-image-preview"
+                onDragOver={(event) => event.preventDefault()}
+                onDrop={(event) => {
+                  event.preventDefault();
+                  const droppedFile = event.dataTransfer.files?.[0];
+                  handleImageUpload(index, "icon", droppedFile);
+                }}
+              >
+                {previewUrl ? (
+                  <img src={previewUrl} alt="" />
+                ) : (
+                  <span>
+                    <ImagePlus size={20} /> Drop or choose image
+                  </span>
+                )}
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(event) => handleImageUpload(index, "icon", event.target.files?.[0])}
+                />
+              </label>
+              <div className="admin-form-row">
+                <button
+                  className="button button-ghost"
+                  type="button"
+                  onClick={() => {
+                    if (item.iconFileId) {
+                      api.delete(`/images/${item.iconFileId}`).catch((error) => {
+                        console.warn("GridFS image cleanup failed:", error);
+                      });
+                    }
+                    onChange(index, "icon", "");
+                    onChange(index, "iconFileId", null);
+                  }}
+                >
+                  Clear
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <input
+                type="url"
+                value={item.icon || ""}
+                onChange={(event) => handleUrlChange(event.target.value)}
+                placeholder="https://example.com/react-icon.png"
+              />
+              {isValidHttpUrl(item.icon) ? (
+                <div className="settings-image-preview" style={{ marginTop: "8px" }}>
+                  <img src={item.icon} alt="" onError={(event) => {
+                    event.currentTarget.style.display = "none";
+                    event.currentTarget.parentElement.innerHTML = "<span><ImagePlus size=20 /> Unable to load image from this URL.</span>";
+                  }} />
+                </div>
+              ) : item.icon ? (
+                <div className="settings-image-preview" style={{ marginTop: "8px" }}>
+                  <span>Unable to load image from this URL.</span>
+                </div>
+              ) : null}
+              <div className="admin-form-row">
+                <button
+                  className="button button-ghost"
+                  type="button"
+                  onClick={() => {
+                    if (item.iconFileId) {
+                      api.delete(`/images/${item.iconFileId}`).catch((error) => {
+                        console.warn("GridFS image cleanup failed:", error);
+                      });
+                    }
+                    onChange(index, "icon", "");
+                    onChange(index, "iconFileId", null);
+                  }}
+                >
+                  Clear
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+
+        <button
+          className="icon-button danger"
+          type="button"
+          onClick={() => onRemove(index)}
+          aria-label={`Remove ${title} item`}
+        >
+          <Trash2 size={17} />
+        </button>
+      </div>
+    );
   };
 
   return (
@@ -679,80 +878,84 @@ const EditableList = ({ title, items, fields, onChange, onAdd, onRemove }) => {
           <Plus size={17} /> Add
         </button>
       </div>
-      {items.map((item, index) => (
-        <div className="editable-row" key={`${title}-${index}`}>
-          {fields.map((field) =>
-            field === "image" || field === "icon" ? (
-              <div className="settings-image-field" key={field}>
-                <label
-                  className="settings-image-preview"
-                  onDragOver={(event) => event.preventDefault()}
-                  onDrop={(event) => {
-                    event.preventDefault();
-                    const droppedFile = event.dataTransfer.files?.[0];
-                    handleImageUpload(index, field, droppedFile);
-                  }}
-                >
-                  {getStoredImageUrl({
-                    fileId: item[`${field}FileId`],
-                    legacyUrl: item[field],
-                    fallback: "",
-                  }) ? (
-                    <img src={getStoredImageUrl({
+      {items.map((item, index) => {
+        if (title === "Skills") return renderSkillRow(item, index);
+
+        return (
+          <div className="editable-row" key={`${title}-${index}`}>
+            {fields.map((field) =>
+              field === "image" || field === "icon" ? (
+                <div className="settings-image-field" key={field}>
+                  <label
+                    className="settings-image-preview"
+                    onDragOver={(event) => event.preventDefault()}
+                    onDrop={(event) => {
+                      event.preventDefault();
+                      const droppedFile = event.dataTransfer.files?.[0];
+                      handleImageUpload(index, field, droppedFile);
+                    }}
+                  >
+                    {getStoredImageUrl({
                       fileId: item[`${field}FileId`],
                       legacyUrl: item[field],
                       fallback: "",
-                    })} alt="" />
-                  ) : (
-                    <span>
-                      <ImagePlus size={20} /> Upload image
-                    </span>
-                  )}
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(event) =>
-                      handleImageUpload(index, field, event.target.files?.[0])
-                    }
-                  />
-                </label>
-                <button
-                  className="button button-ghost"
-                  type="button"
-                  onClick={() => {
-                    onChange(index, field, "");
-                    onChange(index, `${field}FileId`, null);
-                  }}
-                >
-                  Delete Image
-                </button>
-              </div>
-            ) : field === "description" ? (
-              <textarea
-                key={field}
-                value={item[field] || ""}
-                onChange={(event) => onChange(index, field, event.target.value)}
-                placeholder={field}
-              />
-            ) : (
-              <input
-                key={field}
-                value={item[field] || ""}
-                onChange={(event) => onChange(index, field, event.target.value)}
-                placeholder={field}
-              />
-            ),
-          )}
-          <button
-            className="icon-button danger"
-            type="button"
-            onClick={() => onRemove(index)}
-            aria-label={`Remove ${title} item`}
-          >
-            <Trash2 size={17} />
-          </button>
-        </div>
-      ))}
+                    }) ? (
+                      <img src={getStoredImageUrl({
+                        fileId: item[`${field}FileId`],
+                        legacyUrl: item[field],
+                        fallback: "",
+                      })} alt="" />
+                    ) : (
+                      <span>
+                        <ImagePlus size={20} /> Upload image
+                      </span>
+                    )}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(event) =>
+                        handleImageUpload(index, field, event.target.files?.[0])
+                      }
+                    />
+                  </label>
+                  <button
+                    className="button button-ghost"
+                    type="button"
+                    onClick={() => {
+                      onChange(index, field, "");
+                      onChange(index, `${field}FileId`, null);
+                    }}
+                  >
+                    Delete Image
+                  </button>
+                </div>
+              ) : field === "description" ? (
+                <textarea
+                  key={field}
+                  value={item[field] || ""}
+                  onChange={(event) => onChange(index, field, event.target.value)}
+                  placeholder={field}
+                />
+              ) : (
+                <input
+                  key={field}
+                  value={item[field] || ""}
+                  onChange={(event) => onChange(index, field, event.target.value)}
+                  placeholder={field}
+                />
+              ),
+            )}
+            <button
+              className="icon-button danger"
+              type="button"
+              onClick={() => onRemove(index)}
+              aria-label={`Remove ${title} item`}
+            >
+              <Trash2 size={17} />
+            </button>
+          </div>
+        );
+      })}
     </div>
   );
 };

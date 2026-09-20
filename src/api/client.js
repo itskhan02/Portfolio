@@ -27,7 +27,8 @@ export const assetUrl = (path) => {
 };
 
 export const getStoredImageUrl = ({ fileId, legacyUrl, fallback = "" }) => {
-  if (fileId) return `${API_ROOT.replace(/\/api\/?$/, "")}/api/images/${fileId}`;
+  const normalizedFileId = typeof fileId === "object" && fileId !== null ? String(fileId) : fileId;
+  if (normalizedFileId) return `${API_ROOT.replace(/\/api\/?$/, "")}/api/images/${normalizedFileId}`;
   if (legacyUrl) return assetUrl(legacyUrl) || fallback;
   return fallback;
 };
