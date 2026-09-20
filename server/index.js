@@ -32,8 +32,8 @@ app.use(
           "'self'",
           "data:",
           "blob:",
-          "https://img.icons8.com",
-          "https://upload.wikimedia.org",
+          "https:",
+          "http:",
         ],
 
         connectSrc: [

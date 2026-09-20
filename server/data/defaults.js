@@ -31,7 +31,7 @@ export const defaultSettings = {
     },
     {
       name: "TailwindCSS",
-      icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/48px-Tailwind_CSS_Logo.png",
+      icon: "https://icons8.com/color/48/000000/tailwind-css.png",
     },
     {
       name: "Bootstrap",

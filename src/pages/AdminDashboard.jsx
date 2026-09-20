@@ -16,10 +16,18 @@ const emptyProject = {
   image: null,
 };
 
-const isValidHttpUrl = (value) => {
+const isValidImageSource = (value) => {
   if (!value) return false;
+
+  const source = value.trim();
+
+  if (/^data:image\//i.test(source)) {
+    return true;
+  }
+
   try {
-    const url = new URL(value);
+    const url = new URL(source);
+
     return ["http:", "https:"].includes(url.protocol);
   } catch {
     return false;
@@ -47,7 +55,7 @@ const AdminDashboard = () => {
 
   const projectImagePreview = useMemo(() => {
     if (projectForm.image) return projectImageObjectUrl;
-    return getStoredImageUrl({ fileId: projectForm.imageFileId, legacyUrl: projectForm.imageUrl, fallback: "" });
+    return getStoredImageUrl({ fileId: projectForm.imageFileId, legacyUrl: projectForm.imageUrl, fallback: "/logo1.png" });
   }, [projectForm.image, projectForm.imageFileId, projectForm.imageUrl, projectImageObjectUrl]);
 
   const stats = useMemo(
@@ -454,7 +462,14 @@ const AdminDashboard = () => {
             {projects.map((project) => (
               <article key={project._id} className="admin-project-card">
                 <img
-                  src={getStoredImageUrl({ fileId: project.imageFileId, legacyUrl: project.imageUrl, fallback: "/hero.png" })}
+                  src={getStoredImageUrl({
+                    fileId: project.imageFileId,
+                    legacyUrl: project.imageUrl,
+                    fallback: "/logo1.png",
+                  })}
+                  onError={(event) => {
+                    event.currentTarget.src = "/logo1.png";
+                  }}
                   alt={project.title}
                 />
                 <div className="admin-project-content">
@@ -683,7 +698,26 @@ const AdminDashboard = () => {
 };
 
 const EditableList = ({ title, items, fields, onChange, onAdd, onRemove }) => {
+  const [imageModes, setImageModes] = useState({});
   const [urlLoadErrors, setUrlLoadErrors] = useState({});
+
+  const getImageMode = (index, item, field) => {
+    const key = `${title}-${index}-${field}`;
+
+    if (imageModes[key]) {
+      return imageModes[key];
+    }
+
+    if (item[`${field}FileId`]) {
+      return "upload";
+    }
+
+    if (item[field]) {
+      return "url";
+    }
+
+    return "upload";
+  };
 
   const handleImageUpload = async (index, field, file) => {
     if (!file) return;
@@ -697,7 +731,10 @@ const EditableList = ({ title, items, fields, onChange, onAdd, onRemove }) => {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      if (currentItem.iconFileId && currentItem.iconFileId !== response.data.fileId) {
+      if (
+        currentItem.iconFileId &&
+        currentItem.iconFileId !== response.data.fileId
+      ) {
         try {
           await api.delete(`/images/${currentItem.iconFileId}`);
         } catch (deleteError) {
@@ -713,25 +750,41 @@ const EditableList = ({ title, items, fields, onChange, onAdd, onRemove }) => {
   };
 
   const renderSkillRow = (item, index) => {
-    const mode = getSkillMode(item);
+    const modeKey = `${title}-${index}`;
+    const mode = imageModes[modeKey] || getImageMode(index, item, "icon");
     const previewUrl = getStoredImageUrl({
       fileId: item.iconFileId,
       legacyUrl: item.icon,
       fallback: "",
     });
+
+    const switchImageMode = (index, field, mode) => {
+      const key = `${title}-${index}-${field}`;
+
+      setImageModes((current) => ({
+        ...current,
+        [key]: mode,
+      }));
+    };
+
     const urlErrorKey = `skill-${index}`;
     const hasUrlLoadError = Boolean(urlLoadErrors[urlErrorKey]);
 
+
+
     const handleUrlChange = (nextValue) => {
-      const currentFileId = item.iconFileId;
+      setImageModes((current) => ({
+        ...current,
+        [modeKey]: "url",
+      }));
       onChange(index, "icon", nextValue || "");
       onChange(index, "iconFileId", null);
-
-      if (currentFileId) {
-        api.delete(`/images/${currentFileId}`).catch((error) => {
-          console.warn("Old GridFS image cleanup failed during URL switch:", error);
-        });
-      }
+      setUrlLoadErrors((current) => {
+        if (!current[urlErrorKey]) return current;
+        const next = { ...current };
+        delete next[urlErrorKey];
+        return next;
+      });
     };
 
     return (
@@ -743,39 +796,28 @@ const EditableList = ({ title, items, fields, onChange, onAdd, onRemove }) => {
         />
 
         <div className="settings-image-field">
-          <div className="admin-form-row" style={{ marginBottom: "8px" }}>
+          <div className="admin-form-row" style={{ marginBottom: "10px" }}>
             <button
-              className="button button-ghost"
+              className={`button ${
+                mode === "upload" ? "button-primary" : "button-ghost"
+              }`}
               type="button"
-              onClick={() => {
-                const currentFileId = item.iconFileId;
-                const currentUrl = item.icon || "";
-                onChange(index, "icon", "");
-                onChange(index, "iconFileId", currentFileId || null);
-
-                if (currentUrl && currentFileId) {
-                  onChange(index, "icon", "");
-                  onChange(index, "iconFileId", null);
-                }
-              }}
+              aria-pressed={mode === "upload"}
+              onClick={() => switchImageMode(index, "icon", "upload")}
             >
+              <ImagePlus size={17} />
               Upload Image
             </button>
+
             <button
-              className="button button-ghost"
+              className={`button ${
+                mode === "url" ? "button-primary" : "button-ghost"
+              }`}
               type="button"
-              onClick={() => {
-                const currentFileId = item.iconFileId;
-                onChange(index, "icon", item.icon || "");
-                onChange(index, "iconFileId", null);
-                if (currentFileId) {
-                  api.delete(`/images/${currentFileId}`).catch((error) => {
-                    console.warn("Old GridFS image cleanup failed during URL mode switch:", error);
-                  });
-                }
-              }}
+              aria-pressed={mode === "url"}
+              onClick={() => switchImageMode(index, "icon", "url")}
             >
-              Image URL
+              🔗 Image URL
             </button>
           </div>
 
@@ -800,7 +842,9 @@ const EditableList = ({ title, items, fields, onChange, onAdd, onRemove }) => {
                 <input
                   type="file"
                   accept="image/*"
-                  onChange={(event) => handleImageUpload(index, "icon", event.target.files?.[0])}
+                  onChange={(event) =>
+                    handleImageUpload(index, "icon", event.target.files?.[0])
+                  }
                 />
               </label>
               <div className="admin-form-row">
@@ -809,9 +853,11 @@ const EditableList = ({ title, items, fields, onChange, onAdd, onRemove }) => {
                   type="button"
                   onClick={() => {
                     if (item.iconFileId) {
-                      api.delete(`/images/${item.iconFileId}`).catch((error) => {
-                        console.warn("GridFS image cleanup failed:", error);
-                      });
+                      api
+                        .delete(`/images/${item.iconFileId}`)
+                        .catch((error) => {
+                          console.warn("GridFS image cleanup failed:", error);
+                        });
                     }
                     onChange(index, "icon", "");
                     onChange(index, "iconFileId", null);
@@ -829,22 +875,46 @@ const EditableList = ({ title, items, fields, onChange, onAdd, onRemove }) => {
                 onChange={(event) => handleUrlChange(event.target.value)}
                 placeholder="https://example.com/react-icon.png"
               />
-              {isValidHttpUrl(item.icon) ? (
+              {isValidImageSource(item.icon) ? (
                 hasUrlLoadError ? (
-                  <div className="settings-image-preview" style={{ marginTop: "8px" }}>
-                    <span><ImagePlus size={20} /> Unable to load image from this URL.</span>
+                  <div
+                    className="settings-image-preview"
+                    style={{ marginTop: "8px" }}
+                  >
+                    <span>
+                      <ImagePlus size={20} /> Unable to load image from this
+                      URL.
+                    </span>
                   </div>
                 ) : (
-                  <div className="settings-image-preview" style={{ marginTop: "8px" }}>
+                  <div
+                    className="settings-image-preview"
+                    style={{ marginTop: "8px" }}
+                  >
                     <img
-                      src={item.icon}
-                      alt=""
-                      onError={() => setUrlLoadErrors((current) => ({ ...current, [urlErrorKey]: true }))}
+                      src={assetUrl(item.icon)}
+                      alt={`${item.name || "Skill"} icon`}
+                      onError={() =>
+                        setUrlLoadErrors((current) => ({
+                          ...current,
+                          [urlErrorKey]: true,
+                        }))
+                      }
+                      onLoad={() =>
+                        setUrlLoadErrors((current) => {
+                          const next = { ...current };
+                          delete next[urlErrorKey];
+                          return next;
+                        })
+                      }
                     />
                   </div>
                 )
               ) : item.icon ? (
-                <div className="settings-image-preview" style={{ marginTop: "8px" }}>
+                <div
+                  className="settings-image-preview"
+                  style={{ marginTop: "8px" }}
+                >
                   <span>Unable to load image from this URL.</span>
                 </div>
               ) : null}
@@ -854,9 +924,11 @@ const EditableList = ({ title, items, fields, onChange, onAdd, onRemove }) => {
                   type="button"
                   onClick={() => {
                     if (item.iconFileId) {
-                      api.delete(`/images/${item.iconFileId}`).catch((error) => {
-                        console.warn("GridFS image cleanup failed:", error);
-                      });
+                      api
+                        .delete(`/images/${item.iconFileId}`)
+                        .catch((error) => {
+                          console.warn("GridFS image cleanup failed:", error);
+                        });
                     }
                     onChange(index, "icon", "");
                     onChange(index, "iconFileId", null);
@@ -911,11 +983,14 @@ const EditableList = ({ title, items, fields, onChange, onAdd, onRemove }) => {
                       legacyUrl: item[field],
                       fallback: "",
                     }) ? (
-                      <img src={getStoredImageUrl({
-                        fileId: item[`${field}FileId`],
-                        legacyUrl: item[field],
-                        fallback: "",
-                      })} alt="" />
+                      <img
+                        src={getStoredImageUrl({
+                          fileId: item[`${field}FileId`],
+                          legacyUrl: item[field],
+                          fallback: "",
+                        })}
+                        alt=""
+                      />
                     ) : (
                       <span>
                         <ImagePlus size={20} /> Upload image
@@ -944,14 +1019,18 @@ const EditableList = ({ title, items, fields, onChange, onAdd, onRemove }) => {
                 <textarea
                   key={field}
                   value={item[field] || ""}
-                  onChange={(event) => onChange(index, field, event.target.value)}
+                  onChange={(event) =>
+                    onChange(index, field, event.target.value)
+                  }
                   placeholder={field}
                 />
               ) : (
                 <input
                   key={field}
                   value={item[field] || ""}
-                  onChange={(event) => onChange(index, field, event.target.value)}
+                  onChange={(event) =>
+                    onChange(index, field, event.target.value)
+                  }
                   placeholder={field}
                 />
               ),

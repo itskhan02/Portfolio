@@ -16,19 +16,64 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-export const assetUrl = (path) => {
+// export const assetUrl = (path) => {
+//   if (!path) return "";
+//   if (path.startsWith("data:image/") || path.startsWith("blob:")) return path;
+//   if (path.startsWith("http://") || path.startsWith("https://")) return path;
+//   if (path.startsWith("/api/")) return `${SERVER_ROOT}${path}`;
+//   if (path.startsWith("/uploads")) return `${SERVER_ROOT}${path}`;
+//   if (path.startsWith("/")) return `${SERVER_ROOT}${path}`;
+//   return path;
+// };
+
+// export const getStoredImageUrl = ({ fileId, legacyUrl, fallback = "" }) => {
+//   const normalizedFileId = typeof fileId === "object" && fileId !== null ? String(fileId) : fileId;
+//   if (normalizedFileId) return `${API_ROOT.replace(/\/api\/?$/, "")}/api/images/${normalizedFileId}`;
+//   if (legacyUrl) return assetUrl(legacyUrl) || fallback;
+//   return fallback;
+// };
+
+export const assetUrl = (value) => {
+  if (!value) return "";
+
+  const path = String(value).trim();
+
   if (!path) return "";
-  if (path.startsWith("data:image/") || path.startsWith("blob:")) return path;
-  if (path.startsWith("http://") || path.startsWith("https://")) return path;
-  if (path.startsWith("/api/")) return `${SERVER_ROOT}${path}`;
-  if (path.startsWith("/uploads")) return `${SERVER_ROOT}${path}`;
-  if (path.startsWith("/")) return `${SERVER_ROOT}${path}`;
+
+  if (path.startsWith("data:") || path.startsWith("blob:")) {
+    return path;
+  }
+
+  if (/^https?:\/\//i.test(path)) {
+    return path;
+  }
+
+  if (path.startsWith("/api/")) {
+    return `${SERVER_ROOT}${path}`;
+  }
+
+  if (path.startsWith("/uploads")) {
+    return `${SERVER_ROOT}${path}`;
+  }
+
+  if (path.startsWith("/")) {
+    return `${SERVER_ROOT}${path}`;
+  }
+
   return path;
 };
 
 export const getStoredImageUrl = ({ fileId, legacyUrl, fallback = "" }) => {
-  const normalizedFileId = typeof fileId === "object" && fileId !== null ? String(fileId) : fileId;
-  if (normalizedFileId) return `${API_ROOT.replace(/\/api\/?$/, "")}/api/images/${normalizedFileId}`;
-  if (legacyUrl) return assetUrl(legacyUrl) || fallback;
+  const normalizedFileId =
+    typeof fileId === "object" && fileId !== null ? String(fileId) : fileId;
+
+  if (normalizedFileId) {
+    return `${SERVER_ROOT}/api/images/${normalizedFileId}`;
+  }
+
+  if (legacyUrl) {
+    return assetUrl(legacyUrl) || fallback;
+  }
+
   return fallback;
 };

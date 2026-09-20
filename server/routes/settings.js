@@ -10,7 +10,7 @@ const serializeSkill = (skill) => {
   if (!skill || typeof skill !== "object") return skill;
   return {
     ...skill,
-    icon: skill.iconFileId ? `/api/images/${skill.iconFileId}` : skill.icon || "",
+    icon: skill.icon || "",
   };
 };
 
