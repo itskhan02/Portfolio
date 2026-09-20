@@ -314,7 +314,7 @@ const AdminDashboard = () => {
         </div>
 
         <section className="admin-panel glass-panel" id="project-editor">
-          <div className="panel-heading">
+          <div className="panel-heading mb-4">
             <div>
               <span className="eyebrow">Project Management</span>
               <h3>{editingId ? "Edit Project" : "Add Project"}</h3>
@@ -497,7 +497,7 @@ const AdminDashboard = () => {
         </section>
 
         <section className="admin-panel glass-panel" id="resume-manager">
-          <div className="panel-heading">
+          <div className="panel-heading mb-4">
             <div>
               <span className="eyebrow">Resume Management</span>
               <h3>Latest Resume</h3>
@@ -522,7 +522,7 @@ const AdminDashboard = () => {
                   buttonText: event.target.value,
                 }))
               }
-              placeholder="Resume button text"
+              placeholder="Resume "
               required
             />
             <label className="file-drop">
@@ -557,14 +557,14 @@ const AdminDashboard = () => {
                 onClick={deleteResume}
                 disabled={!resume}
               >
-                Delete Resume <Trash2 size={18} />
+                <Trash2 size={18} />
               </button>
             </div>
           </form>
         </section>
 
         <section className="admin-panel glass-panel" id="settings-manager">
-          <div className="panel-heading">
+          <div className="panel-heading mb-4">
             <div>
               <span className="eyebrow">Portfolio Settings</span>
               <h3>Edit Profile Content</h3>

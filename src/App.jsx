@@ -13,14 +13,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path={ADMIN_LOGIN_PATH} element={<AdminLogin />} />
-          <Route
-            path={ADMIN_DASHBOARD_PATH}
-            element={
-              <ProtectedRoute>
-                <AdminDashboard />
-              </ProtectedRoute>
-            }
-          />
+          {/* <Route
+            path={}
+            element={<ProtectedRoute></ProtectedRoute>}
+          /> */}
+          <Route path={ADMIN_DASHBOARD_PATH} element={<AdminDashboard />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AuthProvider>
