@@ -683,6 +683,8 @@ const AdminDashboard = () => {
 };
 
 const EditableList = ({ title, items, fields, onChange, onAdd, onRemove }) => {
+  const [urlLoadErrors, setUrlLoadErrors] = useState({});
+
   const handleImageUpload = async (index, field, file) => {
     if (!file) return;
 
@@ -717,6 +719,8 @@ const EditableList = ({ title, items, fields, onChange, onAdd, onRemove }) => {
       legacyUrl: item.icon,
       fallback: "",
     });
+    const urlErrorKey = `skill-${index}`;
+    const hasUrlLoadError = Boolean(urlLoadErrors[urlErrorKey]);
 
     const handleUrlChange = (nextValue) => {
       const currentFileId = item.iconFileId;
@@ -826,12 +830,19 @@ const EditableList = ({ title, items, fields, onChange, onAdd, onRemove }) => {
                 placeholder="https://example.com/react-icon.png"
               />
               {isValidHttpUrl(item.icon) ? (
-                <div className="settings-image-preview" style={{ marginTop: "8px" }}>
-                  <img src={item.icon} alt="" onError={(event) => {
-                    event.currentTarget.style.display = "none";
-                    event.currentTarget.parentElement.innerHTML = "<span><ImagePlus size=20 /> Unable to load image from this URL.</span>";
-                  }} />
-                </div>
+                hasUrlLoadError ? (
+                  <div className="settings-image-preview" style={{ marginTop: "8px" }}>
+                    <span><ImagePlus size={20} /> Unable to load image from this URL.</span>
+                  </div>
+                ) : (
+                  <div className="settings-image-preview" style={{ marginTop: "8px" }}>
+                    <img
+                      src={item.icon}
+                      alt=""
+                      onError={() => setUrlLoadErrors((current) => ({ ...current, [urlErrorKey]: true }))}
+                    />
+                  </div>
+                )
               ) : item.icon ? (
                 <div className="settings-image-preview" style={{ marginTop: "8px" }}>
                   <span>Unable to load image from this URL.</span>
