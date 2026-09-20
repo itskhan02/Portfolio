@@ -20,7 +20,34 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
   helmet({
-    crossOriginResourcePolicy: { policy: "cross-origin" },
+    crossOriginResourcePolicy: {
+      policy: "cross-origin",
+    },
+
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+
+        imgSrc: [
+          "'self'",
+          "data:",
+          "blob:",
+          "https://img.icons8.com",
+          "https://upload.wikimedia.org",
+        ],
+
+        connectSrc: [
+          "'self'",
+          process.env.CLIENT_URL || "https://portfolio-79gt.onrender.com",
+        ],
+
+        objectSrc: ["'none'"],
+
+        baseUri: ["'self'"],
+
+        frameAncestors: ["'self'"],
+      },
+    },
   }),
 );
 
