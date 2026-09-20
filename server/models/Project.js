@@ -8,7 +8,8 @@ const projectSchema = new mongoose.Schema(
     githubUrl: { type: String, default: "", trim: true },
     liveUrl: { type: String, default: "", trim: true },
     imageUrl: { type: String, default: "", trim: true },
-    featured: { type: Boolean, default: false }
+    imageFileId: { type: mongoose.Schema.Types.ObjectId, default: null },
+    featured: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

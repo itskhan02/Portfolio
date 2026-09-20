@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { assetUrl } from "../api/client";
+import { getStoredImageUrl } from "../api/client";
 
 const initials = (name = "") =>
   name
@@ -13,17 +13,17 @@ const initials = (name = "") =>
 
 const Skill = ({ skills = [] }) => {
 
-  const getSkillIcon = (icon) => {
-    if (!icon) return "";
+  const getSkillIcon = (skill) => {
+    if (!skill) return "";
 
-    if (icon.startsWith("data:image/") || icon.startsWith("blob:")) {
-      return icon;
-    }
-    if (icon.startsWith("http://") || icon.startsWith("https://")) {
-      return icon;
-    }
+    const iconUrl = getStoredImageUrl({
+      fileId: skill.iconFileId,
+      legacyUrl: skill.icon,
+      fallback: "",
+    });
 
-    return assetUrl(icon);
+    if (!iconUrl) return "";
+    return iconUrl;
   };
 
   return (
@@ -71,9 +71,9 @@ const Skill = ({ skills = [] }) => {
               font-black
             "
             >
-              {skill.icon ? (
+              {getSkillIcon(skill) ? (
                 <img
-                  src={getSkillIcon(skill.icon)}
+                  src={getSkillIcon(skill)}
                   alt={skill.name}
                   loading="lazy"
                   className="h-12 w-12 object-contain"

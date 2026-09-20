@@ -1,6 +1,6 @@
-import { ExternalLink, Github, Code2 } from "lucide-react";
+import { ExternalLink, Github } from "lucide-react";
 import { motion } from "framer-motion";
-import { assetUrl } from "../api/client";
+import { getStoredImageUrl } from "../api/client";
 
 const Project = ({ projects = [] }) => {
   return (
@@ -27,7 +27,7 @@ const Project = ({ projects = [] }) => {
       <div className="grid grid-cols-1 gap-5">
         {projects.map((project, index) => (
           <motion.article
-            key={project._id || project.title}
+            key={project._id ?? `${project.title}-${index}`}
             className="group relative grid grid-cols-1 items-center gap-5 overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.045] p-4 shadow-[0_20px_60px_rgba(0,0,0,0.25)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/20 hover:bg-white/[0.06] sm:grid-cols-[190px_1fr] lg:grid-cols-[260px_1fr] lg:gap-7 lg:p-6"
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -40,7 +40,7 @@ const Project = ({ projects = [] }) => {
             <div className="relative w-full overflow-hidden rounded-[20px] border border-white/[0.08] bg-[#080b18]">
               <div className="aspect-video w-full overflow-hidden rounded-[19px]">
                 <img
-                  src={assetUrl(project.imageUrl) || "/hero.png"}
+                  src={getStoredImageUrl({ fileId: project.imageFileId, legacyUrl: project.imageUrl, fallback: "/hero.png" })}
                   alt={project.title}
                   loading="lazy"
                   className="block h-full w-full object-contain object-center p-2 transition-transform duration-500 group-hover:scale-[1.02]"

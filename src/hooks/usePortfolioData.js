@@ -20,7 +20,7 @@ export const usePortfolioData = () => {
 
       setData({
         settings: settings.data || fallbackSettings,
-        projects: projects.data?.length ? projects.data : fallbackProjects,
+        projects: Array.isArray(projects.data) ? projects.data : [],
         resume: resume.data || fallbackResume,
         loading: false
       });

@@ -18,6 +18,16 @@ api.interceptors.request.use((config) => {
 
 export const assetUrl = (path) => {
   if (!path) return "";
-  if (path.startsWith("http")) return path;
-  return path.startsWith("/uploads") ? `${SERVER_ROOT}${path}` : path;
+  if (path.startsWith("data:image/") || path.startsWith("blob:")) return path;
+  if (path.startsWith("http://") || path.startsWith("https://")) return path;
+  if (path.startsWith("/api/")) return `${SERVER_ROOT}${path}`;
+  if (path.startsWith("/uploads")) return `${SERVER_ROOT}${path}`;
+  if (path.startsWith("/")) return `${SERVER_ROOT}${path}`;
+  return path;
+};
+
+export const getStoredImageUrl = ({ fileId, legacyUrl, fallback = "" }) => {
+  if (fileId) return `${API_ROOT.replace(/\/api\/?$/, "")}/api/images/${fileId}`;
+  if (legacyUrl) return assetUrl(legacyUrl) || fallback;
+  return fallback;
 };

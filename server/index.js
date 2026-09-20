@@ -13,6 +13,7 @@ import projectRoutes from "./routes/projects.js";
 import resumeRoutes from "./routes/resume.js";
 import settingsRoutes from "./routes/settings.js";
 import contactRoutes from "./routes/contact.js";
+import imageRoutes from "./routes/images.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -57,14 +58,13 @@ app.get("/api/health", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
+app.use("/api/images", imageRoutes);
 app.use("/api/resume", resumeRoutes);
 app.use("/api/settings", settingsRoutes);
 app.use("/api/contact", contactRoutes);
 
-/* Serve React frontend */
 app.use(express.static(path.join(process.cwd(), "dist")));
 
-/* React Router fallback */
 app.use((req, res, next) => {
   if (req.method !== "GET" || req.path.startsWith("/api/")) {
     return next();
@@ -73,7 +73,6 @@ app.use((req, res, next) => {
   res.sendFile(path.join(process.cwd(), "dist", "index.html"));
 });
 
-/* Error handler */
 app.use((err, req, res, _next) => {
   console.error(err);
 

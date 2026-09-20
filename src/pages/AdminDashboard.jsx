@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Edit3, FileText, ImagePlus, LogOut, Plus, Save, Trash2, X } from "lucide-react";
-import { api, assetUrl } from "../api/client";
+import { api, assetUrl, getStoredImageUrl } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { fallbackSettings } from "../data/defaultPortfolio";
 
@@ -11,17 +11,10 @@ const emptyProject = {
   githubUrl: "",
   liveUrl: "",
   imageUrl: "",
+  imageFileId: null,
   featured: false,
-  image: null
+  image: null,
 };
-
-const readImageFile = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
 
 const AdminDashboard = () => {
   const { admin, logout } = useAuth();
@@ -38,8 +31,8 @@ const AdminDashboard = () => {
 
   const projectImagePreview = useMemo(() => {
     if (projectForm.image) return projectImageObjectUrl;
-    return assetUrl(projectForm.imageUrl);
-  }, [projectForm.image, projectForm.imageUrl, projectImageObjectUrl]);
+    return getStoredImageUrl({ fileId: projectForm.imageFileId, legacyUrl: projectForm.imageUrl, fallback: "" });
+  }, [projectForm.image, projectForm.imageFileId, projectForm.imageUrl, projectImageObjectUrl]);
 
   const stats = useMemo(
     () => [
@@ -169,6 +162,7 @@ const AdminDashboard = () => {
       githubUrl: project.githubUrl || "",
       liveUrl: project.liveUrl || "",
       imageUrl: project.imageUrl || "",
+      imageFileId: project.imageFileId || null,
       featured: Boolean(project.featured),
       image: null
     });
@@ -431,7 +425,7 @@ const AdminDashboard = () => {
             {projects.map((project) => (
               <article key={project._id} className="admin-project-card">
                 <img
-                  src={assetUrl(project.imageUrl) || "/hero.png"}
+                  src={getStoredImageUrl({ fileId: project.imageFileId, legacyUrl: project.imageUrl, fallback: "/hero.png" })}
                   alt={project.title}
                 />
                 <div className="admin-project-content">
@@ -659,16 +653,23 @@ const AdminDashboard = () => {
 };
 
 const EditableList = ({ title, items, fields, onChange, onAdd, onRemove }) => {
- const handleImageUpload = async (index, field, file) => {
-   if (!file) return;
+  const handleImageUpload = async (index, field, file) => {
+    if (!file) return;
 
-   try {
-     const image = await readImageFile(file);
-     onChange(index, field, image);
-   } catch (error) {
-     console.error("Image upload failed:", error);
-   }
- };
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+      formData.append("type", field === "icon" ? "skill" : "project");
+      const response = await api.post("/images/upload", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      onChange(index, field, "");
+      onChange(index, `${field}FileId`, response.data.fileId);
+    } catch (error) {
+      console.error("Image upload failed:", error);
+    }
+  };
 
   return (
     <div className={`editable-list editable-list--${title.toLowerCase()}`}>
@@ -688,11 +689,20 @@ const EditableList = ({ title, items, fields, onChange, onAdd, onRemove }) => {
                   onDragOver={(event) => event.preventDefault()}
                   onDrop={(event) => {
                     event.preventDefault();
-                    handleImageUpload(index, event.dataTransfer.files?.[0]);
+                    const droppedFile = event.dataTransfer.files?.[0];
+                    handleImageUpload(index, field, droppedFile);
                   }}
                 >
-                  {item[field] ? (
-                    <img src={assetUrl(item[field])} alt="" />
+                  {getStoredImageUrl({
+                    fileId: item[`${field}FileId`],
+                    legacyUrl: item[field],
+                    fallback: "",
+                  }) ? (
+                    <img src={getStoredImageUrl({
+                      fileId: item[`${field}FileId`],
+                      legacyUrl: item[field],
+                      fallback: "",
+                    })} alt="" />
                   ) : (
                     <span>
                       <ImagePlus size={20} /> Upload image
@@ -702,14 +712,17 @@ const EditableList = ({ title, items, fields, onChange, onAdd, onRemove }) => {
                     type="file"
                     accept="image/*"
                     onChange={(event) =>
-                      handleImageUpload(index, event.target.files?.[0])
+                      handleImageUpload(index, field, event.target.files?.[0])
                     }
                   />
                 </label>
                 <button
                   className="button button-ghost"
                   type="button"
-                  onClick={() => onChange(index, field, "")}
+                  onClick={() => {
+                    onChange(index, field, "");
+                    onChange(index, `${field}FileId`, null);
+                  }}
                 >
                   Delete Image
                 </button>

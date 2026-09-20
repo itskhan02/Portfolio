@@ -25,12 +25,6 @@ const Home = () => {
   const navigate = useNavigate();
   const { settings, projects, resume } = usePortfolioData();
   const resumeHref = assetUrl(resume?.fileUrl);
-  const heroHighlights = [
-    { label: "Focus", value: "React, Node, UI" },
-    { label: "Availability", value: "Open to opportunities" },
-    { label: "Approach", value: "Performance-first design" },
-  ];
-
   useEffect(() => {
     const openAdminLogin = (event) => {
       if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "a") {

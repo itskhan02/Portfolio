@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 const skillSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true },
-    icon: { type: String, default: "" }
+    icon: { type: String, default: "" },
+    iconFileId: { type: mongoose.Schema.Types.ObjectId, default: null }
   },
   { _id: false }
 );
@@ -23,7 +24,8 @@ const educationSchema = new mongoose.Schema(
     title: { type: String, required: true, trim: true },
     institution: { type: String, required: true, trim: true },
     period: { type: String, required: true, trim: true },
-    image: { type: String, default: "" }
+    image: { type: String, default: "" },
+    imageFileId: { type: mongoose.Schema.Types.ObjectId, default: null }
   },
   { _id: false }
 );

@@ -6,9 +6,21 @@ import { handleValidation } from "../middleware/validate.js";
 
 const router = express.Router();
 
+const serializeSkill = (skill) => {
+  if (!skill || typeof skill !== "object") return skill;
+  return {
+    ...skill,
+    icon: skill.iconFileId ? `/api/images/${skill.iconFileId}` : skill.icon || "",
+  };
+};
+
 router.get("/", async (req, res) => {
   const settings = await PortfolioSettings.findOne();
-  res.json(settings);
+  if (!settings) return res.json(null);
+
+  const payload = settings.toObject();
+  payload.skills = (payload.skills || []).map(serializeSkill);
+  res.json(payload);
 });
 
 router.put(
@@ -24,7 +36,9 @@ router.put(
   handleValidation,
   async (req, res) => {
     const settings = await PortfolioSettings.findOneAndUpdate({}, req.body, { new: true, runValidators: true, upsert: true });
-    res.json(settings);
+    const payload = settings.toObject();
+    payload.skills = (payload.skills || []).map(serializeSkill);
+    res.json(payload);
   }
 );
 
