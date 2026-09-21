@@ -177,7 +177,7 @@ const Home = () => {
           transition={{ delay: 0.15, duration: 0.7 }}
         >
           <img
-            src="/hero1.png"
+            src="/pic.png"
             alt={settings.name}
             loading="eager"
             className="

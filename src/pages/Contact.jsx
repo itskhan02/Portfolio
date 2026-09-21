@@ -76,68 +76,66 @@ return (
       </h2>
     </div>
 
-    <motion.div className="grid items-center gap-7 lg:grid-cols-[0.82fr_1.18fr]">
+    <motion.div
+      className="
+    grid items-stretch gap-7
+    lg:grid-cols-[0.82fr_1.18fr]
+  "
+    >
+      {/* Contact Image */}
       <motion.div
         className="
-          overflow-hidden rounded-[24px]
-          border border-white/10
-          bg-white/[0.045]
-          p-5
-          shadow-[0_28px_90px_rgba(0,0,0,0.3)]
-          backdrop-blur-xl
-        "
+      group relative
+      h-full min-h-[360px]
+      overflow-hidden rounded-[24px]
+      border border-white/10
+      bg-white/[0.045]
+      shadow-[0_28px_90px_rgba(0,0,0,0.3)]
+      backdrop-blur-xl
+    "
         initial={{ opacity: 0, x: -20 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
       >
         <img
           src="/contact.png"
-          alt=""
+          alt="Contact"
           loading="lazy"
-          className="w-full rounded-[20px] object-cover"
+          className="
+        absolute inset-0
+        h-full w-full
+        object-cover
+        object-center
+        transition-transform duration-700
+        group-hover:scale-[1.03]
+      "
         />
 
-        <div className="mt-6 grid gap-4">
-          <a
-            href={`mailto:${settings.email}`}
-            className="flex items-center gap-2.5 text-[var(--muted)] transition-colors hover:text-white"
-          >
-            <Mail size={18} />
-            <span className="break-all">{settings.email}</span>
-          </a>
-
-          <a
-            href={`tel:${settings.phone}`}
-            className="flex items-center gap-2.5 text-[var(--muted)] transition-colors hover:text-white"
-          >
-            <Phone size={18} />
-            {settings.phone}
-          </a>
-
-          <span className="flex items-center gap-2.5 text-[var(--muted)]">
-            <MapPin size={18} />
-            {settings.location}
-          </span>
-        </div>
+        {/* Optional overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
       </motion.div>
 
+      {/* Contact Form */}
       <motion.div
         className="
-          rounded-[24px]
-          border border-white/10
-          bg-white/[0.045]
-          p-5 sm:p-6
-          shadow-[0_28px_90px_rgba(0,0,0,0.3)]
-          backdrop-blur-xl
-        "
+      flex h-full min-h-[360px] flex-col
+      rounded-[24px]
+      border border-white/10
+      bg-white/[0.045]
+      p-5 sm:p-6
+      shadow-[0_28px_90px_rgba(0,0,0,0.3)]
+      backdrop-blur-xl
+    "
         initial={{ opacity: 0, x: 20 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
       >
-        <form ref={form} onSubmit={sendEmail} className="grid gap-5">
+        <form ref={form} onSubmit={sendEmail} className="flex h-full flex-col">
           <div className="grid gap-3.5">
-            <label className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3.5 focus-within:border-cyan-400/40">
+            {/* Name */}
+            <label className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3.5 transition-colors focus-within:border-cyan-400/40">
               <User size={18} className="shrink-0 text-cyan-300" />
+
               <input
                 type="text"
                 name="from_name"
@@ -150,12 +148,20 @@ return (
                   updateField("fromName", event.target.value)
                 }
                 required
-                className="min-w-0 flex-1 bg-transparent text-white outline-none placeholder:text-[var(--muted)]"
+                className="
+              min-w-0 flex-1
+              bg-transparent
+              text-white
+              outline-none
+              placeholder:text-[var(--muted)]
+            "
               />
             </label>
 
-            <label className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3.5 focus-within:border-cyan-400/40">
+            {/* Email */}
+            <label className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3.5 transition-colors focus-within:border-cyan-400/40">
               <Mail size={18} className="shrink-0 text-cyan-300" />
+
               <input
                 type="email"
                 name="from_email"
@@ -166,12 +172,20 @@ return (
                   updateField("fromEmail", event.target.value)
                 }
                 required
-                className="min-w-0 flex-1 bg-transparent text-white outline-none placeholder:text-[var(--muted)]"
+                className="
+              min-w-0 flex-1
+              bg-transparent
+              text-white
+              outline-none
+              placeholder:text-[var(--muted)]
+            "
               />
             </label>
 
-            <label className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3.5 focus-within:border-cyan-400/40">
+            {/* Phone */}
+            <label className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3.5 transition-colors focus-within:border-cyan-400/40">
               <Phone size={18} className="shrink-0 text-cyan-300" />
+
               <input
                 type="tel"
                 name="from_phone"
@@ -183,15 +197,23 @@ return (
                 onChange={(event) =>
                   updateField("fromPhone", event.target.value)
                 }
-                className="min-w-0 flex-1 bg-transparent text-white outline-none placeholder:text-[var(--muted)]"
+                className="
+              min-w-0 flex-1
+              bg-transparent
+              text-white
+              outline-none
+              placeholder:text-[var(--muted)]
+            "
               />
             </label>
 
-            <label className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3.5 focus-within:border-cyan-400/40">
+            {/* Message */}
+            <label className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3.5 transition-colors focus-within:border-cyan-400/40">
               <MessageCircle
                 size={18}
                 className="mt-1 shrink-0 text-cyan-300"
               />
+
               <textarea
                 name="message"
                 placeholder="Message"
@@ -200,14 +222,23 @@ return (
                 value={formData.message}
                 onChange={(event) => updateField("message", event.target.value)}
                 required
-                className="min-h-[150px] min-w-0 flex-1 resize-y bg-transparent text-white outline-none placeholder:text-[var(--muted)]"
+                className="
+              min-h-[150px]
+              min-w-0 flex-1
+              resize-y
+              bg-transparent
+              text-white
+              outline-none
+              placeholder:text-[var(--muted)]
+            "
               />
             </label>
           </div>
 
+          {/* Status */}
           {status && (
             <p
-              className={`text-sm ${
+              className={`mt-4 text-sm ${
                 statusType === "error"
                   ? "text-rose-400"
                   : statusType === "success"
@@ -220,17 +251,24 @@ return (
             </p>
           )}
 
-          <div className="flex justify-start">
+          {/* Submit */}
+          <div className="mt-auto flex justify-start pt-5">
             <button
               className="
-                inline-flex min-h-[46px] items-center justify-center gap-2.5
-                rounded-full
-                bg-gradient-to-r from-[var(--primary)] to-[#6d4bea]
-                px-5 font-extrabold
-                transition-all duration-200
-                hover:-translate-y-0.5
-                disabled:cursor-not-allowed disabled:opacity-60
-              "
+            inline-flex min-h-[46px]
+            items-center justify-center gap-2.5
+            rounded-full
+            bg-gradient-to-r
+            from-[var(--primary)]
+            to-[#6d4bea]
+            px-5
+            font-extrabold
+            transition-all duration-200
+            hover:-translate-y-0.5
+            hover:shadow-lg hover:shadow-purple-500/20
+            disabled:cursor-not-allowed
+            disabled:opacity-60
+          "
               type="submit"
               disabled={sending}
             >
