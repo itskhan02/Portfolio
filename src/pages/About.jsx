@@ -30,7 +30,7 @@ const About = ({ settings, resume }) => {
             overflow-hidden rounded-full
             border border-white/10
             bg-white/[0.045]
-            p-3.5
+            p-2
             shadow-[0_28px_90px_rgba(0,0,0,0.42)]
             backdrop-blur-xl
           "

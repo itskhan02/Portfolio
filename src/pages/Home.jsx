@@ -96,7 +96,7 @@ const Home = () => {
               <span className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-r from-violet-500/10 via-blue-400/10 to-cyan-400/ opacity-0 transition-opacity  duration-500 group-hover:opacity-100" />
             </a>
 
-            {/* RESUME */}
+            {/* Resume */}
             <a
               href={resumeHref}
               target="_blank"
@@ -115,9 +115,8 @@ const Home = () => {
                 />
               </span>
 
-              {/* Text */}
               <span className="relative z-10 transition-colors duration-300 group-hover:text-cyan-100 ">
-                {resume?.buttonText || settings.resumeButtonText || "Resume"}
+                Resume
               </span>
             </a>
           </div>
