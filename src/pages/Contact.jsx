@@ -64,7 +64,7 @@ const Contact = ({ settings }) => {
 return (
   <section
     id="contact"
-    className="relative mx-auto w-[calc(100%-40px)] max-w-[1200px] py-24"
+    className="relative mx-auto w-[calc(100%-40px)] max-w-[1200px] pt-26"
   >
     <div className="mb-10 max-w-[860px]">
       <span className="mb-3.5 inline-flex rounded-full border border-cyan-400/35 bg-cyan-400/[0.08] px-3 py-1.5 text-xs font-extrabold uppercase text-[#8ff7e2]">
@@ -84,15 +84,7 @@ return (
     >
       {/* Contact Image */}
       <motion.div
-        className="
-      group relative
-      h-full min-h-[360px]
-      overflow-hidden rounded-[24px]
-      border border-white/10
-      bg-white/[0.045]
-      shadow-[0_28px_90px_rgba(0,0,0,0.3)]
-      backdrop-blur-xl
-    "
+        className="group relative h-full min-h-[360px] overflow-hidden rounded-[24px]  border border-white/10 bg-white/[0.045] shadow-[0_28px_90px_rgba(0,0,0,0.3)] backdrop-blur-xl"
         initial={{ opacity: 0, x: -20 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
@@ -101,17 +93,9 @@ return (
           src="/contact.png"
           alt="Contact"
           loading="lazy"
-          className="
-        absolute inset-0
-        h-full w-full
-        object-cover
-        object-center
-        transition-transform duration-700
-        group-hover:scale-[1.03]
-      "
+          className="absolute inset-0 h-full p-8 w-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
         />
 
-        {/* Optional overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
       </motion.div>
 

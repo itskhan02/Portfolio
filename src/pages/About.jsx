@@ -6,7 +6,7 @@ const About = ({ settings, resume }) => {
   return (
     <section
       id="about"
-      className="relative mx-auto grid w-[calc(100%-40px)] max-w-[1200px] py-24"
+      className="relative mx-auto grid w-[calc(100%-40px)] max-w-[1200px] pt-26"
     >
       <motion.div
         className="mb-6 max-w-[860px]"
@@ -39,7 +39,7 @@ const About = ({ settings, resume }) => {
           viewport={{ once: true }}
         >
           <img
-            src="/hero2.png"
+            src="/pic2.png"
             alt={settings.name}
             loading="lazy"
             className="h-full w-full rounded-full object-cover object-top"
@@ -88,15 +88,13 @@ const About = ({ settings, resume }) => {
             target="_blank"
             rel="noreferrer"
             download
-            className="
-              inline-flex min-h-[46px] items-center justify-center gap-2.5
-              rounded-full bg-gradient-to-r from-[var(--primary)] to-[#6d4bea]
-              px-5 font-extrabold text-white
-              transition-all duration-200
-              hover:-translate-y-0.5 hover:shadow-lg hover:shadow-purple-500/20
+            className="inline-flex min-h-[46px] items-center justify-center gap-2.5 px-5 font-extrabold text-white group relative py-3 rounded-2xl backdrop-blur-xl border-3 border-indigo-400/30 bg-gradient-to-br from-indigo-500/40 via-black-300/60 to-black/10 shadow-2xl hover:shadow-indigo-500/30 hover:shadow-2xl hover:scale-[1.02] hover:-translate-y-1 active:scale-95 transition-all duration-500 ease-out cursor-pointer hover:border-indigo-400/60 overflow-hidden
             "
           >
-            <Download size={18} />
+            <Download
+              size={18}
+              className=" transition-transform duration-500 group-hover:-translate-y-0.5"
+            />
             Resume
           </a>
         </motion.div>

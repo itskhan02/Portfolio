@@ -29,7 +29,7 @@ const Skill = ({ skills = [] }) => {
   return (
     <section
       id="skills"
-      className="relative mx-auto w-[calc(100%-40px)] max-w-[1200px] py-24"
+      className="relative mx-auto w-[calc(100%-40px)] max-w-[1200px] pt-26"
     >
       <div className="mb-10 max-w-[860px]">
         <span className="mb-3.5 inline-flex rounded-full border border-cyan-400/35 bg-cyan-400/[0.08] px-3 py-1.5 text-xs font-extrabold uppercase text-[#8ff7e2]">

@@ -57,94 +57,145 @@ const Home = () => {
             Hi! There...
           </span>
 
-          <h1
-            className="font-[Poppins,Inter,sans-serif] text-[clamp(2.8rem,7vw,5.5rem)] font-bold leading-[0.98]">
+          <h1 className="font-[Poppins,Inter,sans-serif] text-[clamp(2.8rem,7vw,5.5rem)] font-bold leading-[0.98]">
             I'm{" "}
             <span className="bg-gradient-to-r from-cyan-300 to-purple-400 bg-clip-text text-transparent">
               {settings.name}
             </span>
           </h1>
 
-          <h2
-            className="mt-5 font-[Poppins,Inter,sans-serif] text-[clamp(1.4rem,3vw,2.4rem)] font-semibold leading-tight">
+          <h2 className="mt-5 font-[Poppins,Inter,sans-serif] text-[clamp(1.4rem,3vw,2.4rem)] font-semibold leading-tight">
             And I'm a <span className="text-cyan-300">{settings.jobTitle}</span>
           </h2>
 
-          <p
-            className="mt-6 max-w-2xl text-base leading-8 text-[var(--muted)] sm:text-lg" >
+          <p className="mt-6 max-w-2xl text-base leading-8 text-[var(--muted)] sm:text-lg">
             {settings.summary}
           </p>
 
-          <div className="mt-7 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap items-center gap-3.5">
             <a
               href="#about"
-              className="inline-flex min-h-[46px] items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-[var(--primary)] to-[#6d4bea] px-5 font-extraboldtransition-all hover:-translate-y-0.5">
-              About Me
-              <ArrowRight size={18} />
+              className="group relative inline-flex w-fit overflow-hidden rounded-2xl p-[1px] bg-gradient-to-r from-violet-500 via-blue-500 to-cyan-400 shadow-[0_10px_35px_rgba(79,70,229,0.18)] transition-all duration-500 ease-out hover:-translate-y-1 hover:scale-[1.025] hover:-rotate-[0.5deg] hover:shadow-[0_18px_45px_rgba(79,70,229,0. active:translate-y-0 active:scale-[0.98] active:rotate-0"
+            >
+              <span className="pointer-events-none absolute inset-0 -translate-x-[120%] skew-x-[-18deg] bg-gradient-to-r from-transparent via-white/20 to- transition-transform duration-700 ease- group-hover:translate-x-[120%]" />
+
+              <span className="relative flex items-center justify-between gap-8 rounded-2xl bg-[#0a1020] px-4 py-2 text-white transition-all duration-500 group-hover:bg-[#0d1528] sm:px-4 sm:py-2">
+                <span className=" text-[16px] font-bold tracking-[-0.01em] whitespace- transition-colors duration- group-hover:text-cyan- sm:text-[17px]">
+                  About Me
+                </span>
+
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/[0.06] text-white/90 ring-1 ring-white/[0.09] transition-all duration-500 group-hover:translate-x-1 group-hover:bg-gradient-to-br group-hover:from-cyan-400/15 group-hover:to-violet-400/15 group-hover:text-cyan-200 group-hover:ring-cyan-300/25">
+                  <ArrowRight
+                    size={19}
+                    strokeWidth={2}
+                    className="transition-transform duration-300 group-hover:translate-x-0.5"
+                  />
+                </span>
+              </span>
+
+              <span className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-r from-violet-500/10 via-blue-400/10 to-cyan-400/ opacity-0 transition-opacity  duration-500 group-hover:opacity-100" />
             </a>
 
+            {/* RESUME */}
             <a
               href={resumeHref}
               target="_blank"
               rel="noreferrer"
               download
-              className="
-          inline-flex min-h-[46px]
-          items-center justify-center gap-2.5
-          rounded-full border border-white/10
-          bg-white/[0.05]
-          px-5 font-extrabold
-          transition-all
-          hover:-translate-y-0.5
-          hover:border-cyan-400/30
-        "
+              className="group relative inline-flex min-h-[52px] items-center justify-center gap-3 overflow-hidden rounded-2xl border-2 border-cyan-400/20 bg-white/[0.045] px-5 py-2.5 text-sm font-extrabold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_8px_30px_rgba(0,0,0,0.12)] backdrop-blur-xl transition-all duration-500 ease-out hover:scale-[1.02] hover:-translate-y-1 hover:border-cyan-300/50 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_14px_40px_rgba(34,211,238,0.18)] active:scale- sm:text-base
+"
             >
-              <Download size={18} />
-              {resume?.buttonText || settings.resumeButtonText}
+              <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full" />
+
+              <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-lg bg-white/[0.07] text-cyan-300 ring-1 ring-white/10 transition-all duration-500 group-hover:scale-110 group-hover:bg-cyan-400/10 group-hover:text-cyan-200group-hover:ring-cyan-300/25">
+                <Download
+                  size={17}
+                  strokeWidth={2}
+                  className=" transition-transform duration-500 group-hover:-translate-y-0.5"
+                />
+              </span>
+
+              {/* Text */}
+              <span className="relative z-10 transition-colors duration-300 group-hover:text-cyan-100 ">
+                {resume?.buttonText || settings.resumeButtonText || "Resume"}
+              </span>
             </a>
           </div>
 
-          <div className="social-row" aria-label="Social links">
+          <div
+            className=" mt-6 flex items-center gap-4"
+            aria-label="Social links"
+          >
+            {/* LinkedIn */}
             {settings.socialLinks?.linkedin && (
               <a
                 href={settings.socialLinks.linkedin}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="LinkedIn"
+                className="group relative flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.035] text-white/65 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:bg-cyan-400/[0.15] hover:border-cyan-300/30 hover:text-cyan-100 hover:shadow-[0_10px_40px_rgba(34,211,238,0.35)]"
               >
-                <Linkedin size={20} />
+                <Linkedin
+                  size={19}
+                  className="transition-transform duration-300 group-hover:scale-110"
+                />
+
+                <span className="absolute inset-0 rounded-full bg-cyan-400/0 blur-xl transition-all duration-300 group-hover:bg-cyan-400/10" />
               </a>
             )}
+
+            {/* GitHub */}
             {settings.socialLinks?.github && (
               <a
                 href={settings.socialLinks.github}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="GitHub"
-              >
-                <Github size={20} />
+                className="group relative flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.035] text-white/65 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-violet-300/45 hover:bg-violet-400/[0.18] hover:text-white hover:shadow-[0_10px_35px_rgba(139,92,246,0.28)] active:scale-95" >
+                <Github
+                  size={19}
+                  className="relative z-10 transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_8px_rgba(196,181,253,0.45)]"/>
+
+                <span
+                  className="pointer-events-none absolute inset-0 rounded-full bg-violet-400/0 blur-xl transition-all duration-300 group-hover:bg-violet-400/20" />
               </a>
             )}
+
+            {/* Instagram */}
             {settings.socialLinks?.instagram && (
               <a
                 href={settings.socialLinks.instagram}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Instagram"
+                className="group relative flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.035] text-white/65 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-pink-300/30 hover:bg-pink-400/[0.15] hover:text-pink-300 hover:shadow-[0_10px_30px_rgba(236,72,153,0.16)] "
               >
-                <Instagram size={20} />
+                <Instagram
+                  size={19}
+                  className="transition-transform duration-300 group-hover:scale-110"
+                />
+
+                <span className="absolute inset-0 rounded-full bg-pink-400/0 blur-xl transition-all duration-300 group-hover:bg-pink-400/10" />
               </a>
             )}
-            {settings.socialLinks?.telegram && (
+
+            {/* Telegram */}
+            {/* {settings.socialLinks?.telegram && (
               <a
                 href={settings.socialLinks.telegram}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Telegram"
-              >
-                <Send size={20} />
+                className="group relative flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.035] text-white/65 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-sky-300/30 hover:bg-sky-400/[0.08] hover:text-sky-300 hover:shadow-[0_10px_30px_rgba(56,189,248,0.16)]">
+                <Send
+                  size={19}
+                  className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+
+                <span
+                  className="absolute inset-0 rounded-full bg-sky-400/0 blur-xl transition-all duration-300 group-hover:bg-sky-400/10" />
               </a>
-            )}
+            )} */}
           </div>
 
           {/* <div className="mt-5 flex flex-wrap gap-2">

@@ -101,15 +101,11 @@ const Header = ({ settings, resume }) => {
             key={item.id}
             href={`#${item.id}`}
             onClick={() => setOpen(false)}
-            className={`
-              rounded-full px-3 py-2 text-sm font-semibold
-              transition-colors
-              ${
-                activeSection === item.id
-                  ? "bg-cyan-400/[0.1] text-cyan-300"
-                  : "text-[var(--muted)] hover:bg-white/[0.05] hover:text-white"
-              }
-            `}
+            className={`group relative rounded-xl border px-2.5 py-2 text-sm font-semibold transition-all duration-300 ${
+              activeSection === item.id
+                ? "border-cyan-300/35 bg-gradient-to-r from-cyan-400/[0.10] to-emerald-300/[0.15] text-cyan-200 shadow-[0_0_18px_rgba(34,211,238,0.08)]"
+                : "border-transparent text-[var(--muted)] hover:border-cyan-300/25 hover:bg-white/[0.045] hover:text-white"
+            }`}
           >
             {item.label}
           </a>
@@ -120,16 +116,18 @@ const Header = ({ settings, resume }) => {
           target="_blank"
           rel="noreferrer"
           download
-          className="
-            mt-2 inline-flex items-center justify-center gap-2
-            rounded-full
-            bg-gradient-to-r from-[var(--primary)] to-[#6d4bea]
-            px-4 py-2 text-sm font-bold
-            md:ml-2 md:mt-0
-          "
+          className="group relative mt-2 inline-flex items-center justify-center gap-2 overflow-hidden rounded-2xl border border-cyan-300/30 bg-gradient-to-br from-cyan-400/[0.12] via-emerald-400/[0.08] to-white/[0.04] px-5 py-2.5 text-sm font-bold text-white shadow-[0_8px_30px_rgba(6,182,212,0.12),inset_0_1px_0_rgba(255,255,255,0.15)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-0.5 hover:scale-[1.01] hover:border-cyan-200/60 hover:from-cyan-400/[0.22] hover:via-emerald-400/[0.16] hover:to-white/[0.08] hover:shadow-[0_14px_40px_rgba(6,182,212,0.24),inset_0_1px_0_rgba(255,255,255,0.25)] active:scale-98 md:ml-2 md:mt-0"
         >
-          <Download size={16} />
-          Resume
+          <span className="pointer-events-none absolute inset-0 -translate-x-full skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 " />
+
+          <Download
+            size={16}
+            className="relative z-10 text-cyan-200 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-cyan-100 group-hover:drop-shadow-[0_0_8px_rgba(103,232,249,0.7)]"
+          />
+
+          <span className="relative z-10 bg-gradient-to-r from-white via-cyan-50 to-emerald-100 bg-clip-text text-transparent">
+            Resume
+          </span>
         </a>
       </nav>
     </header>

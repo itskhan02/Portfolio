@@ -6,7 +6,7 @@ const Project = ({ projects = [] }) => {
   return (
     <section
       id="project"
-      className="relative mx-auto w-[calc(100%-40px)] max-w-[1200px] py-24"
+      className="relative mx-auto w-[calc(100%-40px)] max-w-[1200px] pt-26"
     >
       <div className="mb-10 max-w-[860px]">
         <span className="mb-3.5 inline-flex w-fit items-center rounded-full border border-cyan-400/35 bg-cyan-400/[0.08] px-3 py-1.5 text-xs font-extrabold uppercase text-[#8ff7e2]">
@@ -40,7 +40,11 @@ const Project = ({ projects = [] }) => {
             <div className="relative w-full overflow-hidden rounded-[20px] border border-white/[0.08] bg-[#080b18]">
               <div className="aspect-video w-full overflow-hidden rounded-[19px]">
                 <img
-                  src={getStoredImageUrl({ fileId: project.imageFileId, legacyUrl: project.imageUrl, fallback: "/hero.png" })}
+                  src={getStoredImageUrl({
+                    fileId: project.imageFileId,
+                    legacyUrl: project.imageUrl,
+                    fallback: "/hero.png",
+                  })}
                   alt={project.title}
                   loading="lazy"
                   className="block h-full w-full object-contain object-center p-2 transition-transform duration-500 group-hover:scale-[1.02]"
